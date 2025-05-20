@@ -1,0 +1,2 @@
+C:\Users\Guy\source\repos\Ex03-Garage\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.csproj.AssemblyReference.cache
+C:\Users\Guy\source\repos\Ex03-Garage\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.csproj.CoreCompileInputs.cache
