@@ -12,18 +12,45 @@ namespace Ex03.GarageLogic
 								protected float m_EnergyPrecent { get; set; }
 								protected VehicleStatus m_VehicleStatus { get; set; }
 								protected Engine m_Engine { get; set; }
-								private List<Wheel> m_Wheels; //Collection of wheels
-								private ContactInfo m_ContactInfo;
-								public abstract void AddRestProperties(Dictionary<string, string> i_RestProperties);
+								protected List<Wheel> m_Wheels; //Collection of wheels
+								protected ContactInfo m_ContactInfo;
+								public abstract void AddRestProperties(List<string> i_RestProperties);
 
-								public virtual void AddDetails(float i_EnergyPrecent,string i_WheelModel, float i_CurrentAirPressure,List<Wheel> i_ListOfWheels, string i_OwnerName, string i_OwnerNumber, Dictionary<string, string> i_RestProperties)
+								public virtual void AddDetails(float i_EnergyPrecent,string i_WheelModel, float i_CurrentAirPressure,List<Wheel> i_ListOfWheels, string i_OwnerName, string i_OwnerNumber, List<string> i_RestProperties)
 								{
 												m_EnergyPrecent = i_EnergyPrecent;
 												//CreateListOfWheels(i_WheelModel, i_CurrentAirPressure);
 												m_ContactInfo = new ContactInfo(i_OwnerName, i_OwnerNumber);
 												m_Wheels = i_ListOfWheels;
 												AddRestProperties(i_RestProperties);
-								}			
+								}		
+								public virtual Dictionary<string,string> CreatePropertiesDictionary(string[] i_Properties)
+								{
+											Dictionary<string, string> keyValuePairs = new Dictionary<string, string>
+												{
+													 { "VehicleType", i_Properties[0] },
+													 { "LicensePlate", i_Properties[1] },
+													 { "ModelName", i_Properties[2] },
+													 { "EnergyPercentage", i_Properties[3] },
+													 { "TierModel", i_Properties[4] },
+													 { "CurrAirPressure", i_Properties[5] },
+													 { "OwnerName", i_Properties[6] },
+													 { "OwnerNamePhone", i_Properties[7] }
+												};
+													return keyValuePairs;	
+									}
+									public virtual void UpdateVehicleProperties(Dictionary<string,string> i_Properties)
+									{
+												m_EnergyPrecent = float.Parse(i_Properties["EnergyPercentage"]);
+												foreach (Wheel  wheel in m_Wheels)
+												{ 
+												wheel.UpdateTiersModel(i_Properties["TierModel"]);
+												wheel.UpdateTiersAirPressure(float.Parse(i_Properties["CurrAirPressure"]));
+												}
+												m_ContactInfo = new ContactInfo(i_Properties["OwnerName"], i_Properties["OwnerNamePhone"]);
+									}
+
+								
 
 
 								

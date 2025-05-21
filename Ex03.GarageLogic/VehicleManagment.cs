@@ -19,15 +19,16 @@ namespace Ex03.GarageLogic
 								public void LoadVehiclesFromFile(string i_FilePath)
 								{
 												string[] lines = File.ReadAllLines(i_FilePath);
-
+												Console.WriteLine(lines[1]);
 												foreach (string line in lines)
 												{
 																string[] vehicleData = line.Split(',');
-																Console.WriteLine(vehicleData.Length)
+												Console.WriteLine(line);
 
 																string vehicleType = vehicleData[0].Trim();
 																string licensePlate = vehicleData[1].Trim();
 																string modelName = vehicleData[2].Trim();
+																/*
 																float energyPercentage = float.Parse(vehicleData[3].Trim());
 																string tierModel = vehicleData[4].Trim();
 																float currAirPressure = float.Parse(vehicleData[5].Trim());
@@ -35,17 +36,16 @@ namespace Ex03.GarageLogic
 																string ownerPhone = vehicleData[7].Trim();
 
 																Vehicle newVehicle = VehicleCreator.CreateVehicle(vehicleType, licensePlate, modelName);
-																// Handle specific vehicle properties
-																if (vehicleData.Length > 8)
+																// Handle specific vehicle properties - This is not good !
+																List<string> specificProperties = new List<string>();
+																for (int i = 8; i < vehicleData.Length; i++)
 																{
-																				Dictionary<string, string> specificProperties = new Dictionary<string, string>();
-																				for (int i = 8; i < vehicleData.Length; i++)
-																				{
-																								string[] property = vehicleData[i].Split('=');
-																								specificProperties[property[0].Trim()] = property[1].Trim();
-																				}
-																				newVehicle.AddDetails(energyPercentage, tierModel, currAirPressure, new List<Wheel>(), ownerName, ownerPhone, specificProperties);
+																				specificProperties.Add(vehicleData[i].Trim());
 																}
+																*/
+																Vehicle newVehicle = VehicleCreator.CreateVehicle(vehicleType, licensePlate, modelName);
+																Dictionary<string,string> restProperties = newVehicle.CreatePropertiesDictionary(vehicleData);
+																newVehicle.UpdateVehicleProperties(restProperties);
 																AddVehicle(newVehicle);
 												}
 								}

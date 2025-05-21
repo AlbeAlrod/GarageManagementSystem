@@ -26,8 +26,14 @@ namespace Ex03.GarageLogic
 
 												m_CurrentAirPressure = newAirPressure;
 								}
-
-
+								public void UpdateTiersModel(string i_ManufacturerName)
+								{
+												m_ManufacturerName = i_ManufacturerName;
+								}
+								public void UpdateTiersAirPressure(float i_AmountOfAirPressure)
+								{
+												m_CurrentAirPressure = i_AmountOfAirPressure;
+								}
 
 
 				}

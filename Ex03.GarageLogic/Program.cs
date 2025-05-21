@@ -13,7 +13,7 @@ namespace Ex03.GarageLogic
 					VehicleManagment Garage = new VehicleManagment();
 												string filePath = "C:\\Users\\Guy\\source\\repos\\Ex03-Garage\\Vehicles.txt";
 												Garage.LoadVehiclesFromFile(filePath);		
-												Garage.PrintAllVehicles();
+											//	Garage.PrintAllVehicles();
 					}
 				}
 }
