@@ -1,2 +1,7 @@
 C:\Users\Guy\source\repos\Ex03-Garage\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.csproj.AssemblyReference.cache
 C:\Users\Guy\source\repos\Ex03-Garage\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.csproj.CoreCompileInputs.cache
+C:\Users\Guy\source\repos\Ex03-Garage\Ex03.ConsoleUI\bin\Debug\Ex03.ConsoleUI.exe.config
+C:\Users\Guy\source\repos\Ex03-Garage\Ex03.ConsoleUI\bin\Debug\Ex03.ConsoleUI.exe
+C:\Users\Guy\source\repos\Ex03-Garage\Ex03.ConsoleUI\bin\Debug\Ex03.ConsoleUI.pdb
+C:\Users\Guy\source\repos\Ex03-Garage\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.exe
+C:\Users\Guy\source\repos\Ex03-Garage\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.pdb

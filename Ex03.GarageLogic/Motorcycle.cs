@@ -14,8 +14,7 @@ namespace Ex03.GarageLogic
 					public Motorcycle(string i_Model, string i_LisenceNumber, Engine i_Engine) : base(i_Model, i_LisenceNumber, i_Engine)
 					{
 												m_Wheels = new List<Wheel>(2);
-
-								}
+					 }
 
 								public override void AddRestProperties(List<string> i_Parameters)
 								{
