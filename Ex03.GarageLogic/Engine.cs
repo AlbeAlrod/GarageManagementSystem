@@ -6,12 +6,11 @@ namespace Ex03.GarageLogic
 {
 				public abstract class Engine
 				{
-								public float m_CurrentEnergy { get; }
-								public float m_MaxCapacityOfEnergy {  get; }
+								protected float m_CurrentEnergy { get; set;  }
+								protected float m_MaxCapacityOfEnergy { get; set; }
 
 
 
-								public abstract void AddEnergy();
 
 
 

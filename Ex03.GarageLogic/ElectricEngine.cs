@@ -8,10 +8,7 @@ namespace Ex03.GarageLogic
 				{
 
 
-								public override void AddEnergy(float i_Amount)
-								{
-												
-								}
+							
 
 				}
 }

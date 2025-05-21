@@ -9,7 +9,7 @@ namespace Ex03.GarageLogic
 				{
 								public FuelType EngineFuelType { get; private set; }
 
-								public override void AddEnergy(float i_Amount)
+								public void AddEnergy(float i_Amount, FuelType i_FuelType)
 					{
 
 								

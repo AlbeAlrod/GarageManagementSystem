@@ -26,6 +26,12 @@ namespace Ex03.GarageLogic
 												Octan96,
 												Octan98
 								}
+								public enum VehicleStatus
+								{
+												InRepair,
+												Ready,
+												Paid
+								}
 
 				}
 }
