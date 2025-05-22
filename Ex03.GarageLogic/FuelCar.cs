@@ -16,5 +16,15 @@ namespace Ex03.GarageLogic
 		}
 
 
+        public override string ToString()
+        {
+            FuelEngine fuelEngine = m_Engine as FuelEngine;
+            string fuelTypeString = fuelEngine != null ? fuelEngine.EngineFuelType.ToString() : "Unknown";
+
+            return string.Format(
+                "{0}\nFuel Type: {1}",
+                base.ToString(),
+                fuelTypeString);
+        }
 	}
 }

@@ -48,5 +48,14 @@ namespace Ex03.GarageLogic
 		}
 
 
+        public override string ToString()
+        {
+            return string.Format(
+                "{0}\nHazardous Materials: {1}\nCargo Capacity: {2} kg",
+                base.ToString(),
+                m_HazardousMaterials,
+                m_CargoCapacity
+            );
+        }
 	}
 }

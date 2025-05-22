@@ -18,5 +18,10 @@ namespace Ex03.GarageLogic
 		{
 			throw new NotImplementedException("This method must be overridden by fuel engines.");
 		}
+
+        public override string ToString()
+        {
+            return $"Current Energy: {m_CurrentEnergy}, Max Capacity: {m_MaxCapacityOfEnergy}";
+        }
 	}
 }

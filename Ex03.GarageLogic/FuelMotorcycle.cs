@@ -15,5 +15,16 @@ namespace Ex03.GarageLogic
 		{
 
 		}
+        public override string ToString()
+        {
+            string engineDetails = m_Engine is FuelEngine fuelEngine
+                ? string.Format("Fuel Type: {0}\nMax Capacity: {1}L", fuelEngine.EngineFuelType, FuelEngine.k_DefaultCapacities[fuelEngine.EngineFuelType])
+                : "Engine: Unknown";
+
+            return string.Format(
+                "{0}\n{1}",
+                base.ToString(),
+                engineDetails);
+        }
 	}
 }

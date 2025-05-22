@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Ex03.GarageLogic;
 using static Ex03.GarageLogic.Enums;
 
 namespace Ex03.GarageLogic
@@ -50,5 +49,13 @@ namespace Ex03.GarageLogic
 		}
 
 
+        public override string ToString()
+        {
+            return string.Format(
+                "{0}\nLicense Type: {1}\nEngine Capacity: {2}cc",
+                base.ToString(),
+                m_LicenseType,
+                m_EngineCapacity);
+        }
 	}
 }

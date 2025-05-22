@@ -31,7 +31,7 @@ namespace Ex03.GarageLogic
 		}
 
         // Adds fuel if the type is correct and there's enough space
-		public override void AddEnergy(float i_Amount, FuelType i_FuelType)
+		public new void AddEnergy(float i_Amount, FuelType i_FuelType)
 		{
 			if (i_FuelType != EngineFuelType)
 			{
@@ -50,5 +50,10 @@ namespace Ex03.GarageLogic
 
 			m_CurrentEnergy += i_Amount;
 		}
+
+        public override string ToString()
+        {
+            return $"Fuel Engine | Type: {EngineFuelType}, Current: {m_CurrentEnergy}L, Max: {m_MaxCapacityOfEnergy}L";
+        }
 	}
 }

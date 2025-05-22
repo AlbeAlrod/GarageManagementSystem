@@ -74,5 +74,22 @@ namespace Ex03.GarageLogic
 			m_LicenseNumber = i_LicenseNumber;
 			m_Engine = i_Engine;
 		}
+        public override string ToString()
+        {
+            string wheelsInfo = m_Wheels != null ? string.Join(", ", m_Wheels) : "N/A";
+            string contactInfo = m_ContactInfo != null ? m_ContactInfo.ToString() : "N/A";
+            string engineInfo = m_Engine != null ? m_Engine.ToString() : "N/A";
+
+            return string.Format(
+                "Model: {0}\nLicense Number: {1}\nEnergy Percentage: {2}%\nVehicle Status: {3}\nContact Info: {4}\nEngine: {5}\nWheels: [{6}]",
+                m_Model,
+                m_LicenseNumber,
+                m_EnergyPrecent,
+                m_VehicleStatus,
+                contactInfo,
+                engineInfo,
+                wheelsInfo
+            );
+        }
 	}
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Ex03.GarageLogic;
 using static Ex03.GarageLogic.Enums;
@@ -44,5 +44,9 @@ namespace Ex03.GarageLogic
 		}
 
 
+        public override string ToString()
+        {
+            return $"{base.ToString()}\nCar Specifics:\n  Color: {m_Color}\n  Number of Doors: {m_NumberOfDoors}";
+        }
 	}
 }

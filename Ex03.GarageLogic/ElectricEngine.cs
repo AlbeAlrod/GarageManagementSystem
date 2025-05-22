@@ -15,6 +15,8 @@ namespace Ex03.GarageLogic
 			m_CurrentEnergy = 0;
 		}
 
+        public float MaxCapacity => m_MaxCapacityOfEnergy;
+
 		public override void AddEnergy(float i_Amount)
 		{
 			if (i_Amount < 0)
@@ -29,5 +31,9 @@ namespace Ex03.GarageLogic
 
 			m_CurrentEnergy += i_Amount;
 		}
+        public override string ToString()
+        {
+            return $"Electric Engine | Current: {m_CurrentEnergy}h, Max: {m_MaxCapacityOfEnergy}h";
+        }
 	}
 }
