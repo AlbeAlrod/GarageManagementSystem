@@ -1,21 +1,19 @@
-﻿using System;
-
-namespace Ex03.GarageLogic
+﻿namespace Ex03.GarageLogic
 {
     public class ContactInfo
     {
-        public string PersonName { get; private set; }
-        public string PhoneNumber { get; private set; }
+        public string OwnerName { get; }
+        public string PhoneNumber { get; }
 
-        public ContactInfo(string i_PersonName, string i_PhoneNumber)
+        public ContactInfo(string i_OwnerName, string i_PhoneNumber)
         {
-            PersonName = i_PersonName;
+            OwnerName = i_OwnerName;
             PhoneNumber = i_PhoneNumber;
         }
 
         public override string ToString()
         {
-            return $"Owner Name: {PersonName}, Phone Number: {PhoneNumber}";
+            return $"Owner Name: {OwnerName}, Phone Number: {PhoneNumber}";
         }
     }
 }

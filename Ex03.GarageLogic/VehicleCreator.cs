@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 
-
 namespace Ex03.GarageLogic
 {
     public abstract class VehicleCreator
@@ -8,7 +7,6 @@ namespace Ex03.GarageLogic
         public static Vehicle CreateVehicle(string i_VehicleType, string i_LicenseID, string i_ModelName)
         {
             Vehicle newVehicle = null;
-
 
             switch(i_VehicleType)
             {
@@ -29,10 +27,8 @@ namespace Ex03.GarageLogic
                     break;
             }
 
-
             return newVehicle;
         }
-
 
         public static List<string> SupportedTypes
         {

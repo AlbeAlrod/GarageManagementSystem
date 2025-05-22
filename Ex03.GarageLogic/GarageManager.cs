@@ -17,11 +17,11 @@ namespace Ex03.GarageLogic
         // הוספת רכב למלאי
         public void AddVehicle(Vehicle i_Vehicle)
         {
-            if (r_Vehicles.ContainsKey(i_Vehicle.GetLisenceNumber()))
+            if (r_Vehicles.ContainsKey(i_Vehicle.GetLicenseNumber()))
             {
                 throw new ArgumentException("Vehicle with this license number already exists.");
             }
-            r_Vehicles.Add(i_Vehicle.GetLisenceNumber(), i_Vehicle);
+            r_Vehicles.Add(i_Vehicle.GetLicenseNumber(), i_Vehicle);
         }
 
         // הסרת רכב לפי מספר רישוי

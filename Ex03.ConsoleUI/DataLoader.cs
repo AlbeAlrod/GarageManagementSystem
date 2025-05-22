@@ -49,8 +49,17 @@ namespace Ex03.ConsoleUI
                     }
 
                     // יצירת גלגלים (לדוגמה 4 גלגלים עם פרמטרים מהשורה)
-                    List<Wheel> wheels = Wheel.CreateListOfWheels(4, parts[4], float.Parse(parts[5]), 32f);
+                    int numberOfWheels = vehicleType switch
+                    {
+                        "FuelCar" => 4,
+                        "ElectricCar" => 4,
+                        "FuelMotorcycle" => 2,
+                        "ElectricMotorcycle" => 2,
+                        "Truck" => 12,
+                        _ => 4 // ברירת מחדל
+                    };
 
+                    List<Wheel> wheels = Wheel.CreateListOfWheels(numberOfWheels, parts[4], float.Parse(parts[5]), 32f);
                     vehicle.AddDetails(
                         i_EnergyPrecent: float.Parse(parts[3]),
                         i_WheelModel: parts[4],
