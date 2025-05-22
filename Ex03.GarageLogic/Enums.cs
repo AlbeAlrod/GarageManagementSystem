@@ -1,39 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
+using Ex03.GarageLogic;
 
 namespace Ex03.GarageLogic
 {
-				public class Enums
-				{
-								public enum CarColor
-								{
-												Yellow,
-												Black,
-												White,
-												Silver
-								}
-								public enum MotorcycleLicenseType
-								{
-												A,  
-												A1, 
-												A2,
-												B1, 
-												B2,
-												AB
-								}
-								public enum FuelType
-								{
-												Soler,
-												Octan95,
-												Octan96,
-												Octan98
-								}
-								public enum VehicleStatus
-								{
-												InRepair,
-												Ready,
-												Paid
-								}
+	public static class Enums
+	{
+		public enum CarColor
+		{
+			Yellow,
+			Black,
+			White,
+			Silver
+		}
+		public enum MotorcycleLicenseType
+		{
+			A,
+			A1,
+			A2,
+			B1,
+			B2,
+			AB
+		}
+		public enum FuelType
+		{
+			Octane95,
+			Octane96,
+			Soler
+		}
+		public enum VehicleStatus
+		{
+			InRepair,
+			Ready,
+			Paid
+		}
 
-				}
+	}
 }

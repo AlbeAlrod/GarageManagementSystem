@@ -1,0 +1,13 @@
+/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/bin/Debug/net8.0/Ex03.GarageLogic.dll.config
+/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/bin/Debug/net8.0/Ex03.GarageLogic.deps.json
+/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/bin/Debug/net8.0/Ex03.GarageLogic.dll
+/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/bin/Debug/net8.0/Ex03.GarageLogic.pdb
+/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/obj/Debug/net8.0/Ex03.GarageLogic.GeneratedMSBuildEditorConfig.editorconfig
+/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/obj/Debug/net8.0/Ex03.GarageLogic.AssemblyInfoInputs.cache
+/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/obj/Debug/net8.0/Ex03.GarageLogic.AssemblyInfo.cs
+/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/obj/Debug/net8.0/Ex03.GarageLogic.csproj.CoreCompileInputs.cache
+/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/obj/Debug/net8.0/Ex03.GarageLogic.sourcelink.json
+/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/obj/Debug/net8.0/Ex03.GarageLogic.dll
+/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/obj/Debug/net8.0/refint/Ex03.GarageLogic.dll
+/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/obj/Debug/net8.0/Ex03.GarageLogic.pdb
+/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/obj/Debug/net8.0/ref/Ex03.GarageLogic.dll

@@ -1,0 +1,17 @@
+namespace Ex03.GarageLogic
+{
+    public static class VehicleFactoryRegistry
+    {
+        private static readonly Dictionary<string, Func<Vehicle>> sr_Factories = new();
+
+        public static void RegisterFactory(string i_TypeName, Func<Vehicle> i_Factory)
+        {
+            sr_Factories[i_TypeName] = i_Factory;
+        }
+
+        public static Vehicle CreateVehicle(string i_TypeName)
+        {
+            return sr_Factories[i_TypeName]();
+        }
+    }
+}

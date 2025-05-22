@@ -1,23 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 
 namespace Ex03.GarageLogic
 {
-				public class ContactInfo
-				{
-								private string m_PersonName { get; set; }
-								private string m_PhoneNumber { get; set; }
+	public class ContactInfo
+	{
+		public string PersonName { get; private set; }
+		public string PhoneNumber { get; private set; }
 
-
-								public ContactInfo(string i_PersonName, string i_PhoneNumber)
-								{
-								m_PersonName = i_PersonName;
-								m_PhoneNumber = i_PhoneNumber;
-								}
-				}
+		public ContactInfo(string i_PersonName, string i_PhoneNumber)
+		{
+			PersonName = i_PersonName;
+			PhoneNumber = i_PhoneNumber;
+		}
+	}
 
 }
