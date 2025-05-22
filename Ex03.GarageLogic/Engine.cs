@@ -1,37 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
 using static Ex03.GarageLogic.Enums;
 
 namespace Ex03.GarageLogic
 {
-	public abstract class Engine
-	{
-		protected float m_CurrentEnergy { get; set; }
-		protected float m_MaxCapacityOfEnergy { get; set; }
+    public abstract class Engine
+    {
+        protected float m_CurrentEnergy { get; set; }
+        protected float m_MaxCapacityOfEnergy { get; set; }
 
-		public float CurrentEnergy
-		{
-			get { return m_CurrentEnergy; }
-		}
+        public abstract void AddEnergy(float i_Amount);
 
-		public float MaxCapacityOfEnergy
-		{
-			get { return m_MaxCapacityOfEnergy; }
-		}
+        public virtual void AddEnergy(float i_Amount, FuelType i_FuelType)
+        {
+            throw new NotImplementedException("This method must be overridden by fuel engines.");
+        }
 
-		public virtual void AddEnergy(float i_Amount)
-		{
-			throw new NotImplementedException("This method must be overridden by electric engines.");
-		}
+        public float CurrentEnergy
+        {
+            get { return m_CurrentEnergy; }
+        }
 
-		public virtual void AddEnergy(float i_Amount, FuelType i_FuelType)
-		{
-			throw new NotImplementedException("This method must be overridden by fuel engines.");
-		}
+        public float MaxCapacityOfEnergy
+        {
+            get { return m_MaxCapacityOfEnergy; }
+        }
 
-		public override string ToString()
-		{
-			return $"Current Energy: {m_CurrentEnergy}, Max Capacity: {m_MaxCapacityOfEnergy}";
-		}
-	}
+        public override string ToString()
+        {
+            return $"Current Energy: {m_CurrentEnergy}, Max Capacity: {m_MaxCapacityOfEnergy}";
+        }
+    }
 }

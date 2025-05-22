@@ -16,7 +16,8 @@ namespace Ex03.GarageLogic
 
 		public abstract void AddRestProperties(List<string> i_RestProperties);
 
-		public virtual void AddDetails(float i_EnergyPrecent, string i_WheelModel, float i_CurrentAirPressure, List<Wheel> i_ListOfWheels, string i_OwnerName, string i_OwnerNumber, List<string> i_RestProperties)
+		public virtual void AddDetails(float i_EnergyPrecent, string i_WheelModel, float i_CurrentAirPressure,
+									   List<Wheel> i_ListOfWheels, string i_OwnerName, string i_OwnerNumber, List<string> i_RestProperties)
 		{
 			m_EnergyPrecent = i_EnergyPrecent;
 			m_ContactInfo = new ContactInfo(i_OwnerName, i_OwnerNumber);
@@ -45,6 +46,7 @@ namespace Ex03.GarageLogic
 			m_ContactInfo = new ContactInfo(i_Properties["OwnerName"], i_Properties["OwnerNamePhone"]);
 		}
 
+		// מחזיר את אחוז האנרגיה במנוע (דלק או סוללה)
 		public float GetEnergyPercentage()
 		{
 			if (m_Engine == null)
@@ -54,6 +56,33 @@ namespace Ex03.GarageLogic
 			return (m_Engine.CurrentEnergy / m_Engine.MaxCapacityOfEnergy) * 100f;
 		}
 
+		// טעינת דלק (רק למנוע דלק)
+		public void Refuel(float i_Amount, FuelType i_FuelType)
+		{
+			if (m_Engine is FuelEngine fuelEngine)
+			{
+				fuelEngine.AddEnergy(i_Amount, i_FuelType);
+				m_EnergyPrecent = GetEnergyPercentage();
+			}
+			else
+			{
+				throw new InvalidOperationException("This vehicle does not have a fuel engine.");
+			}
+		}
+
+		// טעינת סוללה (רק למנוע חשמלי)
+		public void Recharge(float i_Amount)
+		{
+			if (m_Engine is ElectricEngine electricEngine)
+			{
+				electricEngine.AddEnergy(i_Amount);
+				m_EnergyPrecent = GetEnergyPercentage();
+			}
+			else
+			{
+				throw new InvalidOperationException("This vehicle does not have an electric engine.");
+			}
+		}
 
 		public void SetEnergyPrecent(float i_EnergyPrecent)
 		{
@@ -82,8 +111,9 @@ namespace Ex03.GarageLogic
 			m_Engine = i_Engine;
 		}
 
-		// מתודה אחת ליצירת גלגלים
-		public void CreateWheels(int i_NumberOfWheels, string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
+		// מתודה ליצירת גלגלים
+		public void CreateWheels(int i_NumberOfWheels, string i_ManufacturerName,
+								 float i_CurrentAirPressure, float i_MaxAirPressure)
 		{
 			m_Wheels = Wheel.CreateListOfWheels(i_NumberOfWheels, i_ManufacturerName, i_CurrentAirPressure, i_MaxAirPressure);
 		}
@@ -110,5 +140,6 @@ namespace Ex03.GarageLogic
 		{
 			get { return m_Wheels; }
 		}
+		
 	}
 }
