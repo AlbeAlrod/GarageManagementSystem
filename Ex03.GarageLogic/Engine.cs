@@ -9,6 +9,16 @@ namespace Ex03.GarageLogic
 		protected float m_CurrentEnergy { get; set; }
 		protected float m_MaxCapacityOfEnergy { get; set; }
 
+		public float CurrentEnergy
+		{
+			get { return m_CurrentEnergy; }
+		}
+
+		public float MaxCapacityOfEnergy
+		{
+			get { return m_MaxCapacityOfEnergy; }
+		}
+
 		public virtual void AddEnergy(float i_Amount)
 		{
 			throw new NotImplementedException("This method must be overridden by electric engines.");
@@ -19,9 +29,9 @@ namespace Ex03.GarageLogic
 			throw new NotImplementedException("This method must be overridden by fuel engines.");
 		}
 
-        public override string ToString()
-        {
-            return $"Current Energy: {m_CurrentEnergy}, Max Capacity: {m_MaxCapacityOfEnergy}";
-        }
+		public override string ToString()
+		{
+			return $"Current Energy: {m_CurrentEnergy}, Max Capacity: {m_MaxCapacityOfEnergy}";
+		}
 	}
 }

@@ -1,43 +1,42 @@
 ﻿using System.Collections.Generic;
-using System;
 
-using VehicleFactory = System.Func<string, string, Ex03.GarageLogic.Vehicle>;
 
 namespace Ex03.GarageLogic
 {
-	public abstract class VehicleCreator
-	{
-		private static readonly Dictionary<string, VehicleFactory> sr_Factories = new();
-
-		static VehicleCreator()
-		{
-			Register("FuelCar", (license, model) => new FuelCar(license, model));
-			Register("ElectricCar", (license, model) => new ElectricCar(license, model));
-			Register("FuelMotorcycle", (license, model) => new FuelMotorcycle(license, model));
-			Register("ElectricMotorcycle", (license, model) => new ElectricMotorcycle(license, model));
-			Register("Truck", (license, model) => new Truck(license, model));
-		}
-
-		public static void Register(string typeName, VehicleFactory factory)
-		{
-			if (sr_Factories.ContainsKey(typeName))
-			{
-				throw new InvalidOperationException($"Vehicle type '{typeName}' is already registered.");
-			}
-			sr_Factories[typeName] = factory;
-		}
-
-		public static Vehicle CreateVehicle(string i_VehicleType, string i_LicenseID, string i_ModelName)
-		{
-			if (sr_Factories.TryGetValue(i_VehicleType, out var factory))
-			{
-				return factory(i_LicenseID, i_ModelName);
-			}
-
-			throw new NotSupportedException($"Unsupported vehicle type: {i_VehicleType}");
-		}
+    public abstract class VehicleCreator
+    {
+        public static Vehicle CreateVehicle(string i_VehicleType, string i_LicenseID, string i_ModelName)
+        {
+            Vehicle newVehicle = null;
 
 
-		public static List<string> SupportedTypes => new List<string>(sr_Factories.Keys);
-	}
+            switch(i_VehicleType)
+            {
+                case "FuelCar":
+                    newVehicle = new FuelCar(i_LicenseID, i_ModelName);
+                    break;
+                case "ElectricCar":
+                    newVehicle = new ElectricCar(i_LicenseID, i_ModelName);
+                    break;
+                case "FuelMotorcycle":
+                    newVehicle = new FuelMotorcycle(i_LicenseID, i_ModelName);
+                    break;
+                case "ElectricMotorcycle":
+                    newVehicle = new ElectricMotorcycle(i_LicenseID, i_ModelName);
+                    break;
+                case "Truck":
+                    newVehicle = new Truck(i_LicenseID, i_ModelName);
+                    break;
+            }
+
+
+            return newVehicle;
+        }
+
+
+        public static List<string> SupportedTypes
+        {
+            get{return new List<string> { "FuelCar", "ElectricCar", "FuelMotorcycle", "ElectricMotorcycle", "Truck" }; }
+        }
+    }
 }

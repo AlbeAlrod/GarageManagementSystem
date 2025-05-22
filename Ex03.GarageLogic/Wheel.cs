@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Ex03.GarageLogic;
 
-
 namespace Ex03.GarageLogic
 {
 	public class Wheel
@@ -22,6 +21,8 @@ namespace Ex03.GarageLogic
 			m_CurrentAirPressure = i_CurrentAirPressure;
 			m_MaxAirPressure = i_MaxAirPressure;
 		}
+
+		// הוספת אוויר עד למקסימום, עם בדיקות תקינות
 		public void AddAir(float i_AmountOfAirToAdd)
 		{
 			if (i_AmountOfAirToAdd < 0)
@@ -38,18 +39,36 @@ namespace Ex03.GarageLogic
 
 			m_CurrentAirPressure = newAirPressure;
 		}
+
+		// מנפח את כל הגלגל עד למקסימום
+		public void InflateToMax()
+		{
+			m_CurrentAirPressure = m_MaxAirPressure;
+		}
+
+		// עדכון דגם היצרן של הגלגל
 		public void UpdateTiersModel(string i_ManufacturerName)
 		{
 			m_ManufacturerName = i_ManufacturerName;
 		}
 
+		// עדכון לחץ האוויר הנוכחי
 		public void UpdateTiersAirPressure(float i_AmountOfAirPressure)
 		{
+			if (i_AmountOfAirPressure < 0 || i_AmountOfAirPressure > m_MaxAirPressure)
+			{
+				throw new ValueRangeException(0, m_MaxAirPressure, i_AmountOfAirPressure);
+			}
 			m_CurrentAirPressure = i_AmountOfAirPressure;
 		}
 
+		// עדכון לחץ האוויר המקסימלי (אם נדרש)
 		public void UpdateMaxAirPressure(float i_MaxAirPressure)
 		{
+			if (i_MaxAirPressure < m_CurrentAirPressure)
+			{
+				throw new ArgumentException("Max air pressure cannot be less than current air pressure");
+			}
 			m_MaxAirPressure = i_MaxAirPressure;
 		}
 
@@ -58,6 +77,7 @@ namespace Ex03.GarageLogic
 			return $"Manufacturer: {m_ManufacturerName}, Current Pressure: {m_CurrentAirPressure}, Max Pressure: {m_MaxAirPressure}";
 		}
 
+		// יצירת רשימת גלגלים באותו דגם, לחץ נוכחי ולחץ מקסימלי
 		public static List<Wheel> CreateListOfWheels(int numberOfWheels, string manufacturerName, float currentAirPressure, float maxAirPressure)
 		{
 			List<Wheel> wheels = new List<Wheel>();
@@ -69,6 +89,5 @@ namespace Ex03.GarageLogic
 
 			return wheels;
 		}
-
 	}
 }

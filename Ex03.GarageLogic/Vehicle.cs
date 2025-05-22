@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using static Ex03.GarageLogic.Enums;
 
-
 namespace Ex03.GarageLogic
 {
 	public abstract class Vehicle
@@ -12,18 +11,19 @@ namespace Ex03.GarageLogic
 		protected float m_EnergyPrecent { get; set; }
 		protected VehicleStatus m_VehicleStatus { get; set; }
 		protected Engine m_Engine { get; set; }
-		protected List<Wheel> m_Wheels; //Collection of wheels
+		protected List<Wheel> m_Wheels; // Collection of wheels
 		protected ContactInfo m_ContactInfo;
+
 		public abstract void AddRestProperties(List<string> i_RestProperties);
 
 		public virtual void AddDetails(float i_EnergyPrecent, string i_WheelModel, float i_CurrentAirPressure, List<Wheel> i_ListOfWheels, string i_OwnerName, string i_OwnerNumber, List<string> i_RestProperties)
 		{
 			m_EnergyPrecent = i_EnergyPrecent;
-			//CreateListOfWheels(i_WheelModel, i_CurrentAirPressure);
 			m_ContactInfo = new ContactInfo(i_OwnerName, i_OwnerNumber);
 			m_Wheels = i_ListOfWheels;
 			AddRestProperties(i_RestProperties);
 		}
+
 		public virtual Dictionary<string, string> CreatePropertiesDictionary(string[] i_Headers, string[] i_Properties)
 		{
 			Dictionary<string, string> keyValuePairs = new Dictionary<string, string>();
@@ -33,6 +33,7 @@ namespace Ex03.GarageLogic
 			}
 			return keyValuePairs;
 		}
+
 		public virtual void UpdateVehicleProperties(Dictionary<string, string> i_Properties)
 		{
 			m_EnergyPrecent = float.Parse(i_Properties["EnergyPercentage"]);
@@ -44,8 +45,14 @@ namespace Ex03.GarageLogic
 			m_ContactInfo = new ContactInfo(i_Properties["OwnerName"], i_Properties["OwnerNamePhone"]);
 		}
 
-
-
+		public float GetEnergyPercentage()
+		{
+			if (m_Engine == null)
+			{
+				return 0f;
+			}
+			return (m_Engine.CurrentEnergy / m_Engine.MaxCapacityOfEnergy) * 100f;
+		}
 
 
 		public void SetEnergyPrecent(float i_EnergyPrecent)
@@ -62,11 +69,11 @@ namespace Ex03.GarageLogic
 		{
 			m_VehicleStatus = i_VehicleStatus;
 		}
+
 		public string GetLisenceNumber()
 		{
 			return m_LicenseNumber;
 		}
-
 
 		public Vehicle(string i_Model, string i_LicenseNumber, Engine i_Engine)
 		{
@@ -74,22 +81,34 @@ namespace Ex03.GarageLogic
 			m_LicenseNumber = i_LicenseNumber;
 			m_Engine = i_Engine;
 		}
-        public override string ToString()
-        {
-            string wheelsInfo = m_Wheels != null ? string.Join(", ", m_Wheels) : "N/A";
-            string contactInfo = m_ContactInfo != null ? m_ContactInfo.ToString() : "N/A";
-            string engineInfo = m_Engine != null ? m_Engine.ToString() : "N/A";
 
-            return string.Format(
-                "Model: {0}\nLicense Number: {1}\nEnergy Percentage: {2}%\nVehicle Status: {3}\nContact Info: {4}\nEngine: {5}\nWheels: [{6}]",
-                m_Model,
-                m_LicenseNumber,
-                m_EnergyPrecent,
-                m_VehicleStatus,
-                contactInfo,
-                engineInfo,
-                wheelsInfo
-            );
-        }
+		// מתודה אחת ליצירת גלגלים
+		public void CreateWheels(int i_NumberOfWheels, string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
+		{
+			m_Wheels = Wheel.CreateListOfWheels(i_NumberOfWheels, i_ManufacturerName, i_CurrentAirPressure, i_MaxAirPressure);
+		}
+
+		public override string ToString()
+		{
+			string wheelsInfo = m_Wheels != null ? string.Join(", ", m_Wheels) : "N/A";
+			string contactInfo = m_ContactInfo != null ? m_ContactInfo.ToString() : "N/A";
+			string engineInfo = m_Engine != null ? m_Engine.ToString() : "N/A";
+
+			return string.Format(
+				"Model: {0}\nLicense Number: {1}\nEnergy Percentage: {2}%\nVehicle Status: {3}\nContact Info: {4}\nEngine: {5}\nWheels: [{6}]",
+				m_Model,
+				m_LicenseNumber,
+				m_EnergyPrecent,
+				m_VehicleStatus,
+				contactInfo,
+				engineInfo,
+				wheelsInfo
+			);
+		}
+
+		public List<Wheel> Wheels
+		{
+			get { return m_Wheels; }
+		}
 	}
 }
