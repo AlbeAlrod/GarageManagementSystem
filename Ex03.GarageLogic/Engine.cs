@@ -8,22 +8,17 @@ namespace Ex03.GarageLogic
         protected float m_CurrentEnergy { get; set; }
         protected float m_MaxCapacityOfEnergy { get; set; }
 
+        // חייבים לממש
         public abstract void AddEnergy(float i_Amount);
 
+        // רק למנועי דלק - מימוש אופציונלי, ברירת מחדל זורק חריגה
         public virtual void AddEnergy(float i_Amount, FuelType i_FuelType)
         {
             throw new NotImplementedException("This method must be overridden by fuel engines.");
         }
 
-        public float CurrentEnergy
-        {
-            get { return m_CurrentEnergy; }
-        }
-
-        public float MaxCapacityOfEnergy
-        {
-            get { return m_MaxCapacityOfEnergy; }
-        }
+        public float CurrentEnergy => m_CurrentEnergy;
+        public float MaxCapacityOfEnergy => m_MaxCapacityOfEnergy;
 
         public override string ToString()
         {

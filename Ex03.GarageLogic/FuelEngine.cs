@@ -22,13 +22,11 @@ namespace Ex03.GarageLogic
             m_CurrentEnergy = 0;
         }
 
-        // אסור להשתמש בשיטה הזו עם דלק
         public override void AddEnergy(float i_Amount)
         {
             throw new NotSupportedException("Use AddEnergy with FuelType for FuelEngine.");
         }
 
-        // מימוש טעינת דלק עם בדיקות תקינות
         public override void AddEnergy(float i_Amount, FuelType i_FuelType)
         {
             if (i_FuelType != EngineFuelType)

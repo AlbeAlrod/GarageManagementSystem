@@ -46,7 +46,6 @@ namespace Ex03.GarageLogic
 			m_ContactInfo = new ContactInfo(i_Properties["OwnerName"], i_Properties["OwnerNamePhone"]);
 		}
 
-		// מחזיר את אחוז האנרגיה במנוע (דלק או סוללה)
 		public float GetEnergyPercentage()
 		{
 			if (m_Engine == null)
@@ -54,34 +53,6 @@ namespace Ex03.GarageLogic
 				return 0f;
 			}
 			return (m_Engine.CurrentEnergy / m_Engine.MaxCapacityOfEnergy) * 100f;
-		}
-
-		// טעינת דלק (רק למנוע דלק)
-		public void Refuel(float i_Amount, FuelType i_FuelType)
-		{
-			if (m_Engine is FuelEngine fuelEngine)
-			{
-				fuelEngine.AddEnergy(i_Amount, i_FuelType);
-				m_EnergyPrecent = GetEnergyPercentage();
-			}
-			else
-			{
-				throw new InvalidOperationException("This vehicle does not have a fuel engine.");
-			}
-		}
-
-		// טעינת סוללה (רק למנוע חשמלי)
-		public void Recharge(float i_Amount)
-		{
-			if (m_Engine is ElectricEngine electricEngine)
-			{
-				electricEngine.AddEnergy(i_Amount);
-				m_EnergyPrecent = GetEnergyPercentage();
-			}
-			else
-			{
-				throw new InvalidOperationException("This vehicle does not have an electric engine.");
-			}
 		}
 
 		public void SetEnergyPrecent(float i_EnergyPrecent)
@@ -99,6 +70,17 @@ namespace Ex03.GarageLogic
 			m_VehicleStatus = i_VehicleStatus;
 		}
 
+		public void UpdateVehicleStatus(VehicleStatus i_NewStatus)
+		{
+			if (m_VehicleStatus == VehicleStatus.InRepair && i_NewStatus == VehicleStatus.Paid)
+			{
+				throw new InvalidOperationException("Cannot change status directly from InRepair to Paid. Must be Ready first.");
+			}
+			// הוספת בדיקות לוגיות נוספות אפשרית כאן
+
+			m_VehicleStatus = i_NewStatus;
+		}
+
 		public string GetLisenceNumber()
 		{
 			return m_LicenseNumber;
@@ -109,6 +91,7 @@ namespace Ex03.GarageLogic
 			m_Model = i_Model;
 			m_LicenseNumber = i_LicenseNumber;
 			m_Engine = i_Engine;
+			m_VehicleStatus = VehicleStatus.InRepair; // סטטוס התחלתי
 		}
 
 		// מתודה ליצירת גלגלים
@@ -141,5 +124,9 @@ namespace Ex03.GarageLogic
 			get { return m_Wheels; }
 		}
 		
+		public VehicleStatus VehicleStatus
+		{
+			get { return m_VehicleStatus; }
+		}
 	}
 }
