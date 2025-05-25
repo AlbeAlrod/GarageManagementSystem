@@ -7,24 +7,31 @@ namespace Ex03.GarageLogic
 {
 				public abstract class Vehicle
 				{
-								protected readonly string m_Model;
-								protected readonly string m_LisenceNumber;
+								private readonly string m_Model;
+								private readonly string m_LisenceNumber;
+								private int m_NumberOfWheels { get; }
+								private int m_MaxAirPressure{ get; }			
 								protected float m_EnergyPrecent { get; set; }
 								protected VehicleStatus m_VehicleStatus { get; set; }
 								protected Engine m_Engine { get; set; }
-								protected List<Wheel> m_Wheels; //Collection of wheels
+								protected List<Wheel> m_Wheels; 
 								protected ContactInfo m_ContactInfo;
-								public abstract void AddRestProperties(List<string> i_RestProperties);
 
-								public virtual void AddDetails(float i_EnergyPrecent,string i_WheelModel, float i_CurrentAirPressure,List<Wheel> i_ListOfWheels, string i_OwnerName, string i_OwnerNumber, List<string> i_RestProperties)
+								public Vehicle(string i_Model, string i_LicenseNumber, Engine i_Engine, int i_NumberOfWheels)
 								{
-												m_EnergyPrecent = i_EnergyPrecent;
-												//CreateListOfWheels(i_WheelModel, i_CurrentAirPressure);
-												m_ContactInfo = new ContactInfo(i_OwnerName, i_OwnerNumber);
-												m_Wheels = i_ListOfWheels;
-												AddRestProperties(i_RestProperties);
-								}		
-								public virtual Dictionary<string,string> CreatePropertiesDictionary(string[] i_Properties)
+												m_Model = i_Model;
+												m_LisenceNumber = i_LicenseNumber;
+												m_Engine = i_Engine;
+												m_Wheels = new List<Wheel>();
+												m_NumberOfWheels = i_NumberOfWheels;
+								}
+								public string LicenseNumber
+								{
+												get { return m_LisenceNumber; }
+								}
+
+					
+								public virtual Dictionary<string,string> CreatePropertiesDictionaryFromLine(string[] i_Properties)
 								{
 											Dictionary<string, string> keyValuePairs = new Dictionary<string, string>
 												{
@@ -48,6 +55,21 @@ namespace Ex03.GarageLogic
 												wheel.UpdateTiersAirPressure(float.Parse(i_Properties["CurrAirPressure"]));
 												}
 												m_ContactInfo = new ContactInfo(i_Properties["OwnerName"], i_Properties["OwnerNamePhone"]);
+									}
+
+									public virtual Dictionary<string,string> CreateParametersDictForUser()
+									{
+												Dictionary<string, string> paramDict = new Dictionary<string, string>();
+												paramDict.Add("VehicleType", "Enter vehicle type:");
+												paramDict.Add("LicensePlate", "Enter license plate number:");
+												paramDict.Add("ModelName", "Enter model name:");
+												paramDict.Add("EnergyPercentage", "Enter energy precentage:");
+												paramDict.Add("TierModel", "Enter tier model:");
+												paramDict.Add("CurrAirPressure", "Enter current air pressure:");
+												paramDict.Add("OwnerName", "Enter owner name:");
+												paramDict.Add("OwnerNamePhone", "Enter owner name phone");
+
+												return paramDict;
 									}
 
 								
@@ -74,11 +96,6 @@ namespace Ex03.GarageLogic
 								}
 
 
-								public Vehicle(string i_Model, string i_LicenseNumber, Engine i_Engine)
-								{
-								m_Model = i_Model;
-								m_LisenceNumber = i_LicenseNumber;	
-								m_Engine = i_Engine;
-								}
+							
 				}
 }

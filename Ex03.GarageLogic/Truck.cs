@@ -5,22 +5,22 @@ namespace Ex03.GarageLogic
 {
 				public class Truck : Vehicle
 				{
-				 public bool m_HazardousMaterials;
-					public float m_CargoCapacity;
-								public Truck(string i_LicenseID, string i_ModelName) : base(i_LicenseID, i_ModelName, new FuelEngine())
+								private const int i_NumberOfwheels = 12;
+							 private bool m_HazardousMaterials;
+								private float m_CargoCapacity;
+
+								public Truck(string i_LicenseID, string i_ModelName) : base(i_LicenseID, i_ModelName, new FuelEngine(), i_NumberOfwheels)
 								{
-												m_Wheels = new List<Wheel>(12);
 								}
 								public override void AddRestProperties(List<string> i_Parameters)
 								{
 												m_HazardousMaterials = bool.Parse(i_Parameters[0]);
-												// המרה ישירה של מספר הדלתות
 												m_CargoCapacity = float.Parse(i_Parameters[1]);
 								}
 
-								public override Dictionary<string, string> CreatePropertiesDictionary(string[] i_Properties)
+								public override Dictionary<string, string> CreatePropertiesDictionaryFromLine(string[] i_Properties)
 								{
-												Dictionary<string, string> keyValuePairs = base.CreatePropertiesDictionary(i_Properties);
+												Dictionary<string, string> keyValuePairs = base.CreatePropertiesDictionaryFromLine(i_Properties);
 
 												keyValuePairs.Add("HazardousMaterials", i_Properties[8]);
 												keyValuePairs.Add("CargoCapacity", i_Properties[9]);
@@ -32,6 +32,14 @@ namespace Ex03.GarageLogic
 												base.UpdateVehicleProperties(i_Properties);
 												m_HazardousMaterials = bool.Parse(i_Properties["HazardousMaterials"]);
 												m_CargoCapacity = float.Parse(i_Properties["CargoCapacity"]);
+								}
+
+									public override Dictionary<string, string> CreateParametersDictForUser()
+								{
+								   Dictionary<string,string> paramsDict = base.CreateParametersDictForUser();
+												paramsDict.Add("HazardousMaterials", "Does the trunk curry hazardous materials ? Yes/No:");
+												paramsDict.Add("CargoCapacity", "Enter the cargo capacity:");
+												return paramsDict;
 								}
 
 

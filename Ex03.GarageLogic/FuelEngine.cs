@@ -8,12 +8,8 @@ namespace Ex03.GarageLogic
 				public class FuelEngine : Engine
 				{
 								public FuelType EngineFuelType { get; private set; }
+							 
 
-								public void AddEnergy(float i_Amount, FuelType i_FuelType)
-					{
-
-								
-					}
 
 				}
 }

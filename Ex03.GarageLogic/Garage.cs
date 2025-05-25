@@ -29,7 +29,7 @@ namespace Ex03.GarageLogic
 																string modelName = vehicleData[2].Trim();
 															
 																Vehicle newVehicle = VehicleCreator.CreateVehicle(vehicleType, licensePlate, modelName);
-																Dictionary<string,string> restProperties = newVehicle.CreatePropertiesDictionary(vehicleData);
+																Dictionary<string,string> restProperties = newVehicle.CreatePropertiesDictionaryFromLine(vehicleData);
 																newVehicle.UpdateVehicleProperties(restProperties);
 																AddVehicle(newVehicle);
 												}

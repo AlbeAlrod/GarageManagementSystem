@@ -35,5 +35,18 @@ namespace Ex03.GarageLogic
 												Paid
 								}
 
+								public enum MenuChoise
+								{
+												LoadVehicles = 1,
+												AddNewVehicle,
+												ShowAllVehicles,
+												UpdateVehicleStatus,
+												RefuelVehicle,
+												RechargeVehicle,
+												InflateVehicleWheels,
+												ShowVehicleDetails,
+												Exit
+								}
 				}
 }
+
