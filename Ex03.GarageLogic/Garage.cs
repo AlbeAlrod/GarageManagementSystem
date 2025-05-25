@@ -8,7 +8,7 @@ using static Ex03.GarageLogic.Enums;
 
 namespace Ex03.GarageLogic
 {
-				public class VehicleManagment
+				public class Garage
 				{
 								private Dictionary<string, Vehicle> vehicles = new Dictionary<string, Vehicle>();
 
@@ -19,30 +19,15 @@ namespace Ex03.GarageLogic
 								public void LoadVehiclesFromFile(string i_FilePath)
 								{
 												string[] lines = File.ReadAllLines(i_FilePath);
-												Console.WriteLine(lines[1]);
+
 												foreach (string line in lines)
 												{
 																string[] vehicleData = line.Split(',');
-												Console.WriteLine(line);
 
 																string vehicleType = vehicleData[0].Trim();
 																string licensePlate = vehicleData[1].Trim();
 																string modelName = vehicleData[2].Trim();
-																/*
-																float energyPercentage = float.Parse(vehicleData[3].Trim());
-																string tierModel = vehicleData[4].Trim();
-																float currAirPressure = float.Parse(vehicleData[5].Trim());
-																string ownerName = vehicleData[6].Trim();
-																string ownerPhone = vehicleData[7].Trim();
-
-																Vehicle newVehicle = VehicleCreator.CreateVehicle(vehicleType, licensePlate, modelName);
-																// Handle specific vehicle properties - This is not good !
-																List<string> specificProperties = new List<string>();
-																for (int i = 8; i < vehicleData.Length; i++)
-																{
-																				specificProperties.Add(vehicleData[i].Trim());
-																}
-																*/
+															
 																Vehicle newVehicle = VehicleCreator.CreateVehicle(vehicleType, licensePlate, modelName);
 																Dictionary<string,string> restProperties = newVehicle.CreatePropertiesDictionary(vehicleData);
 																newVehicle.UpdateVehicleProperties(restProperties);

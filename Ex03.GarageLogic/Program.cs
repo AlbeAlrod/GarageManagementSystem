@@ -10,9 +10,10 @@ namespace Ex03.GarageLogic
 				{
 				 public static void Main()
 					{
-					VehicleManagment Garage = new VehicleManagment();
+													Garage garage = new Garage();
 												string filePath = "C:\\Users\\Guy\\source\\repos\\Ex03-Garage\\Vehicles.txt";
-												Garage.LoadVehiclesFromFile(filePath);		
+												garage.LoadVehiclesFromFile(filePath);
+												Console.WriteLine("Hello");
 											//	Garage.PrintAllVehicles();
 					}
 				}

@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.ConsoleUI
 {
-				public class Program
+				internal class ConsoleUIHelper
 				{
-								public static void Main()
-								{
-												Console.WriteLine("Ui of the Garage");
-								}
 				}
 }
