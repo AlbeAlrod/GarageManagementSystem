@@ -1,19 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Ex03.GarageLogic.Enums;
-
+using Ex03.GarageLogic;
 
 namespace Ex03.GarageLogic
 {
-				public class FuelEngine : Engine
-				{
-								public FuelType EngineFuelType { get; private set; }
+	public class FuelEngine : Engine
+	{
+		public FuelType FuelType { get; }
 
-								public void AddEnergy(float i_Amount, FuelType i_FuelType)
-					{
+		public override float CurrentEnergy { get; protected set; }
+		public override float MaxCapacity { get; protected set; }
 
-								
-					}
+		public FuelEngine(FuelType fuelType, float maxCapacity)
+		{
+			FuelType = fuelType;
+			MaxCapacity = maxCapacity;
+			CurrentEnergy = 0f;
+		}
 
-				}
+		public override void AddEnergy(float i_Quantity)
+		{
+			if (i_Quantity < 0 || CurrentEnergy + i_Quantity > MaxCapacity)
+			{
+				throw new ArgumentOutOfRangeException("Fuel amount exceeds capacity");
+			}
+
+			CurrentEnergy += i_Quantity;
+		}
+	}
 }
