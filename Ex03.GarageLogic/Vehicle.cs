@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using static Ex03.GarageLogic.Enums;
 
-
 namespace Ex03.GarageLogic
 {
 				public abstract class Vehicle
@@ -89,14 +88,20 @@ namespace Ex03.GarageLogic
 								m_ContactInfo = i_contactInfo;
 								}
 
-								public void SetVehicleStatus(VehicleStatus i_VehicleStatus)
-								{
-								m_VehicleStatus = i_VehicleStatus;
-								}
-								public string GetLisenceNumber()
-								{
-												return m_LisenceNumber;
-								}
+        public virtual Dictionary<string, string> CreateParametersDictForUser()
+        {
+            return new Dictionary<string, string>
+            {
+                { "VehicleType", "Enter vehicle type:" },
+                { "LicensePlate", "Enter license plate number:" },
+                { "ModelName", "Enter model name:" },
+                { "EnergyPercentage", "Enter energy percentage:" },
+                { "TierModel", "Enter tier model:" },
+                { "CurrAirPressure", "Enter current air pressure:" },
+                { "OwnerName", "Enter owner name:" },
+                { "OwnerNamePhone", "Enter owner phone number:" }
+            };
+        }
 
 								
 
