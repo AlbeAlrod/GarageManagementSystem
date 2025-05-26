@@ -10,11 +10,12 @@ namespace Ex03.GarageLogic
 {
 				public class Garage
 				{
-								private Dictionary<string, Vehicle> vehicles = new Dictionary<string, Vehicle>();
+								private Dictionary<string, Vehicle> m_Vehicles = new Dictionary<string, Vehicle>();
+								private List<ContactInfo> m_Contacts =	new List<ContactInfo>();
 
 								public void AddVehicle(Vehicle i_Vehicle)
 								{
-												vehicles.Add(i_Vehicle.GetLisenceNumber(), i_Vehicle);
+												m_Vehicles.Add(i_Vehicle.GetLisenceNumber(), i_Vehicle);
 								}
 								public void LoadVehiclesFromFile(string i_FilePath)
 								{
@@ -34,9 +35,25 @@ namespace Ex03.GarageLogic
 																AddVehicle(newVehicle);
 												}
 								}
+
+								public bool FindVehicleByLicenseNumber(string i_VehicleLicenseNumber)
+								{
+												bool found = false;
+
+												foreach(Vehicle vehicle in m_Vehicles.Values) 
+												{
+																string currentVehicleLicenseNumber = vehicle.LicenseNumber;
+																if(currentVehicleLicenseNumber == i_VehicleLicenseNumber)
+																{
+																found = true;
+																}
+												}
+
+												return found;
+								}
 								public void PrintAllVehicles()
 								{
-												foreach (var vehicle in vehicles) // Assuming 'vehicles' is a collection of Vehicle objects
+												foreach (var vehicle in m_Vehicles) // Assuming 'vehicles' is a collection of Vehicle objects
 												{
 																Console.WriteLine(vehicle.ToString());
 												}

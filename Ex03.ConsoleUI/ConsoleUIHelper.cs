@@ -1,8 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic;
+using static Ex03.GarageLogic.Enums;
 
 namespace Ex03.ConsoleUI
 {
@@ -20,18 +23,65 @@ namespace Ex03.ConsoleUI
 												Console.WriteLine("7. Inflate Vehicle Wheels");
 												Console.WriteLine("8. Show Vehicle details");
 												Console.WriteLine("9. Exit");
-												Console.Write("Please select an option (1-9): ");
 								}
 								public string ReadValidOption()
 								{
 												while (true)
-												{
+												{			
+																int numOfChoises = Enum.GetValues(typeof(MenuChoise)).Length;
+																int userChoise;
+																bool isValidInput;
 																string input = Console.ReadLine();
-																if (!string.IsNullOrEmpty(input) && input.Length == 1 && "1234567".Contains(input))
+																do
 																{
-																				return input;
+																				Console.Write($"Please choose a number between {1} and {numOfChoises}: ");
+																				isValidInput = int.TryParse(Console.ReadLine(), out userChoise) && userChoise >= 1 && userChoise <= numOfChoises;
+																				
+																				if(!isValidInput)
+																				{
+																								Console.Write($"Invalid input. Please enter a number between 1 and {numOfChoises}: ");
+																				}
 																}
-																Console.Write("Invalid input. Please enter a number between 1 and 7: ");
+
+																while (!isValidInput);
+												}
+								}
+								public void LoadVehicles(Garage i_Garage, string filePath)
+								{
+												if (File.Exists(filePath))
+												{
+																try
+																{
+																i_Garage.LoadVehiclesFromFile(filePath);
+																}
+
+																catch (IOException ex)
+																{
+																				Console.WriteLine($"Error opening file: {ex.Message}");
+																}
+																catch (UnauthorizedAccessException ex)
+																{
+																				Console.WriteLine($"Access denied: {ex.Message}");
+																}
+
+												}
+								}
+								public void AddNewVehicle(Garage i_Garage)
+								{
+												Console.WriteLine("Please enter the vehcile license number: ");
+												string vehicleLicenseNumber = Console.ReadLine();
+												bool isExist = i_Garage.FindVehicleByLicenseNumber(vehicleLicenseNumber);
+												if (isExist) 
+												{
+																Console.WriteLine("This vehicle already exist in the garage!");
+																//Change vehicle status to in progress.
+																
+												}
+												else
+												{
+
+
+
 												}
 								}
 
