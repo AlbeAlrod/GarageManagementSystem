@@ -9,11 +9,13 @@ namespace Ex03.GarageLogic
 {
 	public class Motorcycle : Vehicle
 	{
-		private const int k_NumberOfWheels = 2;
+		private const int i_NumberOfWheels = 2;
+		private const int m_MaxAirPressure = 30;
+
 		public Enums.MotorcycleLicenseType m_LicenseType { get; set; }
 		public int m_EngineCapacity { get; set; }
 
-		public Motorcycle(string i_Model, string i_LicenseNumber, Engine i_Engine) : base(i_Model, i_LicenseNumber, i_Engine, k_NumberOfWheels)
+		public Motorcycle(string i_Model, string i_LicenseNumber, Engine i_Engine) : base(i_Model, i_LicenseNumber, i_Engine, i_NumberOfWheels)
 		{
 			m_Wheels = new List<Wheel>(2);
 		}
@@ -42,8 +44,8 @@ namespace Ex03.GarageLogic
 		public override Dictionary<string, string> CreateParametersDictForUser()
 		{
 			Dictionary<string, string> paramsDict = base.CreateParametersDictForUser();
-			paramsDict.Add("CarColor", "Enter car color:");
-			paramsDict.Add("NumberOfDoors", "Enter number of doors:");
+			paramsDict.Add("LicenseType", "Enter license type:");
+			paramsDict.Add("EngineCapacity", "Enter engine capacity:");
 			return paramsDict;
 		}
 

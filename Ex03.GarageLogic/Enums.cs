@@ -33,7 +33,7 @@
         Paid
     }
 
-    public enum MenuChoise
+    public enum MenuChoice
     {
         LoadVehicles = 1,
         AddNewVehicle,
