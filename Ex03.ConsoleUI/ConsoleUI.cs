@@ -38,6 +38,9 @@ namespace Ex03.ConsoleUI
 																				case MenuChoice.ShowAllVehicles:
 																								consoleUIHelper.ShowAllVehicles(garage);				
 																								break;
+																				case MenuChoice.UpdateVehicleStatus:
+																								consoleUIHelper.UpdateVehicleStatus(garage);
+																								break;
 
 
 

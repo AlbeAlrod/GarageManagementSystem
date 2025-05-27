@@ -29,6 +29,10 @@ namespace Ex03.GarageLogic
 								{
 												get { return m_LisenceNumber; }
 								}
+								public string Model
+								{
+												get { return m_Model; }
+								}
 
 					
 								public virtual Dictionary<string,string> CreatePropertiesDictionaryFromLine(string[] i_Properties)

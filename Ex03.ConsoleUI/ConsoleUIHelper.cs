@@ -140,5 +140,42 @@ namespace Ex03.ConsoleUI
 												i_Garage.PrintAllVehicles();
 											
 								}
+
+								public void UpdateVehicleStatus(Garage i_Garage)
+								{
+												Console.WriteLine("Please enter car's license number:");
+												string vehicleLicenseNumber = Console.ReadLine();
+
+												if (i_Garage.IsVehicleExistInGarage(vehicleLicenseNumber))
+												{
+
+																//Check if the licensenumber exist in the garage
+																Console.WriteLine("Please select the new status from the following options: ");
+
+
+																var statuses = Enum.GetValues(typeof(VehicleStatus)).Cast<VehicleStatus>().ToArray();
+																int i = 1;
+
+																foreach (var status in statuses)
+																{
+																				Console.WriteLine($"{i++} - {status}");
+																}
+
+																int choise;
+
+																do
+																{
+																				Console.WriteLine("Your Choise: ");
+																}
+																while (!int.TryParse(Console.ReadLine(), out choise) || choise < 1 || choise > statuses.Length);
+
+																i_Garage.ModifyVehicleStatus(vehicleLicenseNumber, (VehicleStatus)choise);
+												}
+												else
+												{
+																throw new ArgumentException("Vehicle doesn't exist in the garage.");
+
+												}
+        }
 				}
 }

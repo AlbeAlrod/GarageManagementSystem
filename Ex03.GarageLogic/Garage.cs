@@ -55,9 +55,23 @@ namespace Ex03.GarageLogic
 								}
 								public void ModifyVehicleStatus(string i_vehicleLicenseNumber, VehicleStatus i_NewStatus)
 								{
-												
-
+												VehicleInfo vehicleInfo = GetVehicleInfo(i_vehicleLicenseNumber);
+												vehicleInfo.SetVehicleStatus(i_NewStatus);
 								}
+
+								public VehicleInfo GetVehicleInfo(string i_LicenseNumber)
+								{
+												if (m_Vehicles.TryGetValue(i_LicenseNumber, out var vehicleInfo))
+												{
+																return vehicleInfo;
+												}
+
+												throw new ArgumentException(
+																$"No vehicle found with license number '{i_LicenseNumber}'.",
+																nameof(i_LicenseNumber)
+												);
+								}
+				
 								public void AddNewVehicle(string i_VehicleType)
 								{
 												

@@ -21,8 +21,14 @@ namespace Ex03.GarageLogic
 
 								public override string ToString()
 								{
-												string res = $"License number: {m_Vehicle.LicenseNumber} ..";
+												string res = $"License number: {m_Vehicle.LicenseNumber}, Car model: {m_Vehicle.Model}, Vehicle status: {m_VehicleStatus}";
 												return res;
 								}
+
+								public void SetVehicleStatus(VehicleStatus i_VehicleStatus)
+								{
+												m_VehicleStatus = i_VehicleStatus;
+								}
 				}
+
 }
