@@ -10,12 +10,15 @@ namespace Ex03.GarageLogic
 {
 				public class Garage
 				{
-								private Dictionary<string, Vehicle> m_Vehicles = new Dictionary<string, Vehicle>();
-								private List<ContactInfo> m_Contacts =	new List<ContactInfo>();
+								//	private Dictionary<string, Vehicle> m_Vehicles = new Dictionary<string, Vehicle>();
+								private Dictionary<string, VehicleInfo> m_Vehicles = new Dictionary<string, VehicleInfo>();
+								private List<CustomerInfo> m_Customers = new List<CustomerInfo>(); 
 
-								public void AddVehicle(Vehicle i_Vehicle)
+								public void AddVehicleToVehiclesInfo(Vehicle i_Vehicle, CustomerInfo i_Customer, VehicleStatus i_Stauts)
 								{
-												m_Vehicles.Add(i_Vehicle.GetLisenceNumber(), i_Vehicle);
+												VehicleInfo newVehicleInfo = new VehicleInfo(i_Vehicle, i_Customer, i_Stauts);
+
+												m_Vehicles.Add(i_Vehicle.LicenseNumber, newVehicleInfo);
 								}
 								public void LoadVehiclesFromFile(string i_FilePath)
 								{
@@ -32,31 +35,37 @@ namespace Ex03.GarageLogic
 																Vehicle newVehicle = VehicleCreator.CreateVehicle(vehicleType, licensePlate, modelName);
 																Dictionary<string,string> restProperties = newVehicle.CreatePropertiesDictionaryFromLine(vehicleData);
 																newVehicle.UpdateVehicleProperties(restProperties);
-																AddVehicle(newVehicle);
+
+																CustomerInfo customer = new CustomerInfo();
+																customer.UpdateCustomerParams(restProperties);		
+																AddVehicleToVehiclesInfo(newVehicle, customer, VehicleStatus.InRepair);
 												}
 								}
 
-								public bool FindVehicleByLicenseNumber(string i_VehicleLicenseNumber)
+								public bool IsVehicleExistInGarage(string i_LicenseNumber)
 								{
-												bool found = false;
-
-												foreach(Vehicle vehicle in m_Vehicles.Values) 
-												{
-																string currentVehicleLicenseNumber = vehicle.LicenseNumber;
-																if(currentVehicleLicenseNumber == i_VehicleLicenseNumber)
-																{
-																found = true;
-																}
-												}
-
-												return found;
+												return m_Vehicles.ContainsKey(i_LicenseNumber);
 								}
 								public void PrintAllVehicles()
 								{
 												foreach (var vehicle in m_Vehicles) // Assuming 'vehicles' is a collection of Vehicle objects
 												{
-																Console.WriteLine(vehicle.ToString());
+																Console.WriteLine(vehicle.Value.ToString());
 												}
 								}
+								public void ModifyVehicleStatus(string i_vehicleLicenseNumber, VehicleStatus i_NewStatus)
+								{
+												
+
+								}
+								public void AddNewVehicle(string i_VehicleType)
+								{
+												
+								}
+								public void AddCustomer(CustomerInfo i_Customer)
+								{
+												m_Customers.Add(i_Customer);
+								}
+
 				}
 }

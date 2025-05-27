@@ -1,4 +1,9 @@
 ﻿using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
@@ -14,13 +19,25 @@ namespace Ex03.ConsoleUI
 								{
 								ConsoleUIHelper consoleUIHelper = new ConsoleUIHelper();
 								bool isSessionActive = true;
+								string filePath = "C:\\Users\\Guy\\source\\repos\\Ex03-Garage\\Vehicles.txt";
+
 												while (isSessionActive)
 												{
+
 																consoleUIHelper.PrintMenu();
-																Enums.MenuChoise userChoise = (Enums.MenuChoise)Enum.Parse(typeof(Enums.MenuChoise), consoleUIHelper.ReadValidOption());
+																MenuChoice userChoise = (MenuChoice)Enum.Parse(typeof(MenuChoice), consoleUIHelper.ReadValidOption());
 																
 																switch(userChoise) 
 																{
+																				case MenuChoice.LoadVehicles:
+																								consoleUIHelper.LoadVehicles(garage, filePath);
+																								break;
+																				case MenuChoice.AddNewVehicle:
+																								consoleUIHelper.AddNewVehicle(garage);
+																								break;
+																				case MenuChoice.ShowAllVehicles:
+																								consoleUIHelper.ShowAllVehicles(garage);				
+																								break;
 
 
 

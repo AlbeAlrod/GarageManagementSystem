@@ -12,7 +12,7 @@ namespace Ex03.GarageLogic
 		private const int i_NumberOfWheels = 2;
 		private const int m_MaxAirPressure = 30;
 
-		public Enums.MotorcycleLicenseType m_LicenseType { get; set; }
+		public MotorcycleLicenseType m_LicenseType { get; set; }
 		public int m_EngineCapacity { get; set; }
 
 		public Motorcycle(string i_Model, string i_LicenseNumber, Engine i_Engine) : base(i_Model, i_LicenseNumber, i_Engine, i_NumberOfWheels)
@@ -20,11 +20,6 @@ namespace Ex03.GarageLogic
 			m_Wheels = new List<Wheel>(2);
 		}
 
-		public override void AddRestProperties(List<string> i_Parameters)
-		{
-			m_LicenseType = (Enums.MotorcycleLicenseType)Enum.Parse(typeof(Enums.MotorcycleLicenseType), i_Parameters[0]);
-			m_EngineCapacity = int.Parse(i_Parameters[1]);
-		}
 		public override Dictionary<string, string> CreatePropertiesDictionaryFromLine(string[] i_Properties)
 		{
 			Dictionary<string, string> keyValuePairs = base.CreatePropertiesDictionaryFromLine(i_Properties);
@@ -37,7 +32,7 @@ namespace Ex03.GarageLogic
 		public override void UpdateVehicleProperties(Dictionary<string, string> i_Params)
 		{
 			base.UpdateVehicleProperties(i_Params);
-			m_LicenseType = (Enums.MotorcycleLicenseType)Enum.Parse(typeof(Enums.MotorcycleLicenseType), i_Params["LicenseType"]);
+			m_LicenseType = (MotorcycleLicenseType)Enum.Parse(typeof(MotorcycleLicenseType), i_Params["LicenseType"]);
 			m_EngineCapacity = int.Parse(i_Params["EngineCapacity"]);
 		}
 

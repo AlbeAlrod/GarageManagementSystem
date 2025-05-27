@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Ex03.GarageLogic.Enums;
 
 namespace Ex03.GarageLogic
 {
@@ -15,7 +14,6 @@ namespace Ex03.GarageLogic
 								//	protected VehicleStatus m_VehicleStatus { get; set; }
 								//	protected ContactInfo m_ContactInfo;
 								//private int m_MaxAirPressure{ get; }			
-
 
 
 
@@ -48,28 +46,24 @@ namespace Ex03.GarageLogic
 												};
 													return keyValuePairs;	
 									}
-									public virtual void UpdateVehicleProperties(Dictionary<string,string> i_Properties)
-									{
+								public virtual void UpdateVehicleProperties(Dictionary<string, string> i_Properties)
+								{
 												m_EnergyPrecent = float.Parse(i_Properties["EnergyPercentage"]);
-												foreach (Wheel  wheel in m_Wheels)
-												{ 
-												wheel.UpdateTiersModel(i_Properties["TierModel"]);
-												wheel.UpdateTiersAirPressure(float.Parse(i_Properties["CurrAirPressure"]));
+
+												foreach (Wheel wheel in m_Wheels)
+												{
+																wheel.UpdateTiersModel(i_Properties["TierModel"]);
+																wheel.UpdateTiersAirPressure(float.Parse(i_Properties["CurrAirPressure"]));
 												}
-												m_CustomerInfo = new CustomerInfo(i_Properties["OwnerName"], i_Properties["OwnerNamePhone"]);
-									}
+								}
 
 									public virtual Dictionary<string,string> CreateParametersDictForUser()
 									{
 												Dictionary<string, string> paramDict = new Dictionary<string, string>();
-												paramDict.Add("VehicleType", "Enter vehicle type:");
-												paramDict.Add("LicensePlate", "Enter license plate number:");
-												paramDict.Add("ModelName", "Enter model name:");
+
 												paramDict.Add("EnergyPercentage", "Enter energy precentage:");
 												paramDict.Add("TierModel", "Enter tier model:");
 												paramDict.Add("CurrAirPressure", "Enter current air pressure:");
-												paramDict.Add("OwnerName", "Enter owner name:");
-												paramDict.Add("OwnerNamePhone", "Enter owner name phone");
 
 												return paramDict;
 									}
@@ -83,26 +77,8 @@ namespace Ex03.GarageLogic
 												m_EnergyPrecent = i_EnergyPrecent;
 								}
 
-								public void SetContactInfo(CustomerInfo i_contactInfo)
-								{
-								m_ContactInfo = i_contactInfo;
-								}
 
-        public virtual Dictionary<string, string> CreateParametersDictForUser()
-        {
-            return new Dictionary<string, string>
-            {
-                { "VehicleType", "Enter vehicle type:" },
-                { "LicensePlate", "Enter license plate number:" },
-                { "ModelName", "Enter model name:" },
-                { "EnergyPercentage", "Enter energy percentage:" },
-                { "TierModel", "Enter tier model:" },
-                { "CurrAirPressure", "Enter current air pressure:" },
-                { "OwnerName", "Enter owner name:" },
-                { "OwnerNamePhone", "Enter owner phone number:" }
-            };
-        }
-
+       
 								
 
 

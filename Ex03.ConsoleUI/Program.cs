@@ -10,7 +10,8 @@ namespace Ex03.ConsoleUI
 				{
 								public static void Main()
 								{
-												Console.WriteLine("Ui of the Garage");
+												ConsoleUI console = new ConsoleUI();
+												console.Start();
 								}
 				}
 }

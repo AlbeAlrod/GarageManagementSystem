@@ -5,7 +5,9 @@
         Yellow,
         Black,
         White,
-        Silver
+        Silver,
+        Red,
+        Blue
     }
 
     public enum MotorcycleLicenseType
@@ -23,7 +25,8 @@
         Soler,
         Octan95,
         Octan96,
-        Octan98
+        Octan98,
+
     }
 
     public enum VehicleStatus
@@ -44,5 +47,13 @@
         InflateVehicleWheels,
         ShowVehicleDetails,
         Exit
+    }
+    public enum SupportedTypes
+				{
+     FuelCar = 1,
+     ElectricCar,
+     FuelMotorcycle,
+     ElectricMotorcycle,
+     Truck
     }
 }

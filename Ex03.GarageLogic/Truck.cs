@@ -17,11 +17,7 @@ namespace Ex03.GarageLogic
 		{
 		}
 
-		public override void AddRestProperties(List<string> i_Parameters)
-		{
-			m_HazardousMaterials = bool.Parse(i_Parameters[0]);
-			m_CargoCapacity = float.Parse(i_Parameters[1]);
-		}
+
 
 		public override Dictionary<string, string> CreatePropertiesDictionaryFromLine(string[] i_Properties)
 		{
@@ -34,7 +30,10 @@ namespace Ex03.GarageLogic
 		public override void UpdateVehicleProperties(Dictionary<string, string> i_Properties)
 		{
 			base.UpdateVehicleProperties(i_Properties);
-			m_HazardousMaterials = bool.Parse(i_Properties["HazardousMaterials"]);
+	 	if (i_Properties["HazardousMaterials"] == "No")
+						m_HazardousMaterials = false;
+			else
+						m_HazardousMaterials = true;
 			m_CargoCapacity = float.Parse(i_Properties["CargoCapacity"]);
 		}
 
