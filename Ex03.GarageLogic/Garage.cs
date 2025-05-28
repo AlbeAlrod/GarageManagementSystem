@@ -81,5 +81,13 @@ namespace Ex03.GarageLogic
 												m_Customers.Add(i_Customer);
 								}
 
+								public Dictionary<string, VehicleInfo> GetVehiclesInfo()
+								{
+												return m_Vehicles;
+								}
+								public Dictionary<string, VehicleInfo> VehiclesInfo
+								{
+												get { return m_Vehicles; }
+								}
 				}
 }

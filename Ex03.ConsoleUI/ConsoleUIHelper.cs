@@ -43,6 +43,70 @@ namespace Ex03.ConsoleUI
 																while (!isValidInput);
 												return userChoise.ToString();
 								}
+								public string GetLicenseNumberFromUser()
+								{
+												string licenseNumber;
+												bool isValidInput = false;
+
+												do
+												{
+																Console.WriteLine("Please enter the vehicle's license number:");
+																licenseNumber = Console.ReadLine();
+
+																try
+																{
+																				ValidateLicenseNumber(licenseNumber);
+																				isValidInput = true;
+																}
+																catch (ArgumentException ex)
+																{
+																				Console.WriteLine($"Invalid input: {ex.Message}");
+																				Console.WriteLine("Please try again.");
+																}
+												} while (!isValidInput);
+
+												return licenseNumber;
+								}
+								public string GetVehicleModelFromUser(int i_NumberOfSupportedModels)
+								{
+												string model;
+												bool isValidInput = false;
+
+												do
+												{
+																Console.WriteLine("Please enter the vehicle's model:");
+																model = Console.ReadLine();
+
+																try
+																{
+																				if (string.IsNullOrEmpty(model))
+																				{
+																								throw new ArgumentException("Input cannot be empty");
+																				}
+
+																				// Check if the model is a number and in range
+																				if (int.TryParse(model, out int modelNumber))
+																				{
+																								if (modelNumber < 1 || modelNumber > i_NumberOfSupportedModels)
+																								{
+																												throw new ValueRangeException(1, i_NumberOfSupportedModels, modelNumber);
+																								}
+																				}
+
+																				isValidInput = true;
+																}
+																catch (ValueRangeException)
+																{
+																				Console.WriteLine($"The value is not in the valid range (1 - {i_NumberOfSupportedModels}). Please enter again.");
+																}
+																catch (ArgumentException ex)
+																{
+																				Console.WriteLine($"Invalid input: {ex.Message}, Please enter again.");
+																}
+												} while (!isValidInput);
+
+												return model;
+								}
 								public void LoadVehicles(Garage i_Garage, string filePath)
 								{
 												if (File.Exists(filePath))
@@ -65,22 +129,19 @@ namespace Ex03.ConsoleUI
 								}
 								public void AddNewVehicle(Garage i_Garage)
 								{
-												Console.WriteLine("Please enter the vehcile license number: ");
-												string vehicleLicenseNumber = Console.ReadLine();
+												string vehicleLicenseNumber = GetLicenseNumberFromUser();
 												bool isExist = i_Garage.IsVehicleExistInGarage(vehicleLicenseNumber);
+
 												if (isExist)
 												{
 																Console.WriteLine("This vehicle already exist in the garage!");
 																i_Garage.ModifyVehicleStatus(vehicleLicenseNumber, VehicleStatus.InRepair);
-																//Change vehicle status to in progress.
-
 												}
 												else //The car not exist
 												{
 																PrintVehiclesTypes(VehicleCreator.SupportedTypes);
 																string choosenVehicleByUser = GetVehicleType();
-																Console.WriteLine("Please Enter vehicle model:");
-																string vehicleModel = Console.ReadLine();
+																string vehicleModel = GetVehicleModelFromUser(VehicleCreator.SupportedTypes.Count);
 
 																//Vehicle create and params:
 																Vehicle newVehicle = VehicleCreator.CreateVehicle(choosenVehicleByUser, vehicleLicenseNumber, vehicleModel);
@@ -140,11 +201,20 @@ namespace Ex03.ConsoleUI
 												i_Garage.PrintAllVehicles();
 											
 								}
+								public void PrintVehicleStatuses()
+								{
+												var statuses = Enum.GetValues(typeof(VehicleStatus)).Cast<VehicleStatus>().ToArray();
+												int i = 1;
+
+												foreach (var status in statuses)
+												{
+																Console.WriteLine($"{i++} - {status}");
+												}
+								}
 
 								public void UpdateVehicleStatus(Garage i_Garage)
 								{
-												Console.WriteLine("Please enter car's license number:");
-												string vehicleLicenseNumber = Console.ReadLine();
+												string vehicleLicenseNumber = GetLicenseNumberFromUser();
 
 												if (i_Garage.IsVehicleExistInGarage(vehicleLicenseNumber))
 												{
@@ -152,22 +222,22 @@ namespace Ex03.ConsoleUI
 																//Check if the licensenumber exist in the garage
 																Console.WriteLine("Please select the new status from the following options: ");
 
-
-																var statuses = Enum.GetValues(typeof(VehicleStatus)).Cast<VehicleStatus>().ToArray();
-																int i = 1;
-
-																foreach (var status in statuses)
-																{
-																				Console.WriteLine($"{i++} - {status}");
-																}
+																PrintVehicleStatuses();
 
 																int choise;
+																bool correct;
 
 																do
 																{
 																				Console.WriteLine("Your Choise: ");
+
+																				correct = int.TryParse(Console.ReadLine(), out choise) && choise >= 1 && choise <= Enum.GetValues(typeof(VehicleStatus)).Length;
+																				if(!correct)
+																				{
+																								Console.WriteLine("Invalid input");
+																				}
 																}
-																while (!int.TryParse(Console.ReadLine(), out choise) || choise < 1 || choise > statuses.Length);
+																while (!correct);
 
 																i_Garage.ModifyVehicleStatus(vehicleLicenseNumber, (VehicleStatus)choise);
 												}
@@ -177,5 +247,31 @@ namespace Ex03.ConsoleUI
 
 												}
         }
-				}
+
+								public void InflateAirPressureToMax(Garage i_Garage)
+								{
+
+								}
+								public void RefuelVehicle(Garage i_Garage)
+								{
+
+								}
+								public void RechargeVehicle(Garage i_Garage)
+								{
+
+								}
+								public void ShowVehicleDetails(Garage i_garage)
+								{
+
+								}
+								private void ValidateLicenseNumber(string i_LicenseNumber)
+								{
+												if (string.IsNullOrEmpty(i_LicenseNumber))
+												{
+																throw new ArgumentException("License number cannot be empty");
+												}
+								}
+
+
+								}
 }
