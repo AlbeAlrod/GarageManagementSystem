@@ -7,7 +7,7 @@ namespace Ex03.GarageLogic
 	{
 		private const int k_NumberOfWheels = 12;
 		private const float k_MaxFuelCapacity = 120f;
-		private const FuelType k_TruckFuelType = FuelType.Soler;
+		private const FuelType k_TruckFuelType = FuelType.Solar;
 
 		private bool m_HazardousMaterials;
 		private float m_CargoCapacity;
@@ -30,10 +30,10 @@ namespace Ex03.GarageLogic
 		public override void UpdateVehicleProperties(Dictionary<string, string> i_Properties)
 		{
 			base.UpdateVehicleProperties(i_Properties);
-	 	if (i_Properties["HazardousMaterials"] == "No")
-						m_HazardousMaterials = false;
+			if (i_Properties["HazardousMaterials"] == "No")
+				m_HazardousMaterials = false;
 			else
-						m_HazardousMaterials = true;
+				m_HazardousMaterials = true;
 			m_CargoCapacity = float.Parse(i_Properties["CargoCapacity"]);
 		}
 

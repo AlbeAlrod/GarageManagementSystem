@@ -27,5 +27,7 @@ namespace Ex03.GarageLogic
 
 			CurrentEnergy += i_Quantity;
 		}
+
+
 	}
 }

@@ -3,41 +3,41 @@ using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
-				public abstract class Vehicle
-				{
-								private readonly string m_Model;
-								private readonly string m_LisenceNumber;
-								protected int m_NumberOfWheels { get; }
-								protected float m_EnergyPrecent { get; set; }
-								protected Engine m_Engine { get; set; }
-								protected List<Wheel> m_Wheels;
-								//	protected VehicleStatus m_VehicleStatus { get; set; }
-								//	protected ContactInfo m_ContactInfo;
-								//private int m_MaxAirPressure{ get; }			
+	public abstract class Vehicle
+	{
+		private readonly string m_Model;
+		private readonly string m_LicenseNumber;
+		protected int m_NumberOfWheels { get; }
+		protected float m_EnergyPercent { get; set; }
+		protected Engine m_Engine { get; set; }
+		protected List<Wheel> m_Wheels;
+		//	protected VehicleStatus m_VehicleStatus { get; set; }
+		//	protected ContactInfo m_ContactInfo;
+		//private int m_MaxAirPressure{ get; }			
 
 
 
-								public Vehicle(string i_Model, string i_LicenseNumber, Engine i_Engine, int i_NumberOfWheels)
-								{
-												m_Model = i_Model;
-												m_LisenceNumber = i_LicenseNumber;
-												m_Engine = i_Engine;
-												m_Wheels = new List<Wheel>();
-												m_NumberOfWheels = i_NumberOfWheels;
-								}
-								public string LicenseNumber
-								{
-												get { return m_LisenceNumber; }
-								}
-								public string Model
-								{
-												get { return m_Model; }
-								}
+		public Vehicle(string i_Model, string i_LicenseNumber, Engine i_Engine, int i_NumberOfWheels)
+		{
+			m_Model = i_Model;
+			m_LicenseNumber = i_LicenseNumber;
+			m_Engine = i_Engine;
+			m_Wheels = new List<Wheel>();
+			m_NumberOfWheels = i_NumberOfWheels;
+		}
+		public string LicenseNumber
+		{
+			get { return m_LicenseNumber; }
+		}
+		public string Model
+		{
+			get { return m_Model; }
+		}
 
-					
-								public virtual Dictionary<string,string> CreatePropertiesDictionaryFromLine(string[] i_Properties)
-								{
-											Dictionary<string, string> keyValuePairs = new Dictionary<string, string>
+
+		public virtual Dictionary<string, string> CreatePropertiesDictionaryFromLine(string[] i_Properties)
+		{
+			Dictionary<string, string> keyValuePairs = new Dictionary<string, string>
 												{
 													 { "VehicleType", i_Properties[0] },
 													 { "LicensePlate", i_Properties[1] },
@@ -48,44 +48,43 @@ namespace Ex03.GarageLogic
 													 { "OwnerName", i_Properties[6] },
 													 { "OwnerNamePhone", i_Properties[7] }
 												};
-													return keyValuePairs;	
-									}
-								public virtual void UpdateVehicleProperties(Dictionary<string, string> i_Properties)
-								{
-												m_EnergyPrecent = float.Parse(i_Properties["EnergyPercentage"]);
+			return keyValuePairs;
+		}
+		public virtual void UpdateVehicleProperties(Dictionary<string, string> i_Properties)
+		{
+			m_EnergyPercent = float.Parse(i_Properties["EnergyPercentage"]);
 
-												foreach (Wheel wheel in m_Wheels)
-												{
-																wheel.UpdateTiersModel(i_Properties["TierModel"]);
-																wheel.UpdateTiersAirPressure(float.Parse(i_Properties["CurrAirPressure"]));
-												}
-								}
+			foreach (Wheel wheel in m_Wheels)
+			{
+				wheel.UpdateTiersModel(i_Properties["TierModel"]);
+				wheel.UpdateTiersAirPressure(float.Parse(i_Properties["CurrAirPressure"]));
+			}
+		}
 
-									public virtual Dictionary<string,string> CreateParametersDictForUser()
-									{
-												Dictionary<string, string> paramDict = new Dictionary<string, string>();
+		public virtual Dictionary<string, string> CreateParametersDictForUser()
+		{
+			Dictionary<string, string> paramDict = new Dictionary<string, string>();
 
-												paramDict.Add("EnergyPercentage", "Enter energy precentage:");
-												paramDict.Add("TierModel", "Enter tier model:");
-												paramDict.Add("CurrAirPressure", "Enter current air pressure:");
+			paramDict.Add("EnergyPercentage", "Enter energy percentage:");
+			paramDict.Add("TierModel", "Enter tier model:");
+			paramDict.Add("CurrAirPressure", "Enter current air pressure:");
 
-												return paramDict;
-									}
+			return paramDict;
+		}
 
-								
+		public void SetEnergyPercent(float i_EnergyPercent)
+		{
+			m_EnergyPercent = i_EnergyPercent;
+		}
 
+		public Engine Engine
+		{
+			get { return m_Engine; }
+		}
 
-								
-								public void SetEnergyPrecent(float i_EnergyPrecent)
-								{
-												m_EnergyPrecent = i_EnergyPrecent;
-								}
-
-
-       
-								
-
-
-							
-				}
+		public List<Wheel> Wheels
+		{
+			get { return m_Wheels; }
+		}
+	}
 }

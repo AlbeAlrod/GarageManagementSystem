@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Ex03.GarageLogic;
 
 namespace Ex03.GarageLogic
 {
@@ -26,15 +26,35 @@ namespace Ex03.GarageLogic
 
 			m_CurrentAirPressure = newAirPressure;
 		}
+
 		public void UpdateTiersModel(string i_ManufacturerName)
 		{
 			m_ManufacturerName = i_ManufacturerName;
 		}
+
 		public void UpdateTiersAirPressure(float i_AmountOfAirPressure)
 		{
 			m_CurrentAirPressure = i_AmountOfAirPressure;
 		}
 
+		public void InflateToMax()
+		{
+			m_CurrentAirPressure = m_MaxAirPressure;
+		}
 
+		public float CurrentAirPressure
+		{
+			get { return m_CurrentAirPressure; }
+		}
+
+		public float MaxAirPressure
+		{
+			get { return m_MaxAirPressure; }
+		}
+
+		public string ManufacturerName
+		{
+			get { return m_ManufacturerName; }
+		}
 	}
 }
