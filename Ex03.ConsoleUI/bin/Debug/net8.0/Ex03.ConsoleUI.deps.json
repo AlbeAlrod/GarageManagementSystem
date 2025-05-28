@@ -16,7 +16,10 @@
       },
       "Ex03.GarageLogic/1.0.0": {
         "runtime": {
-          "Ex03.GarageLogic.dll": {}
+          "Ex03.GarageLogic.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

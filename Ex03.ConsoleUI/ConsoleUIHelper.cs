@@ -1,277 +1,280 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ex03.GarageLogic;
-//using static Ex03.GarageLogic.Enums;
 
 namespace Ex03.ConsoleUI
 {
-				public class ConsoleUIHelper
+	public class ConsoleUIHelper
+	{
+		public void PrintMenu()
+		{
+			Console.WriteLine("=== Garage Management System ===");
+			Console.WriteLine("1. Load vehicles from file");
+			Console.WriteLine("2. Add New Vehicle");
+			Console.WriteLine("3. Show All Vehicles");
+			Console.WriteLine("4. Show Vehicles by Status");
+			Console.WriteLine("5. Update Vehicle Status");
+			Console.WriteLine("6. Refuel Vehicle");
+			Console.WriteLine("7. Recharge Vehicle");
+			Console.WriteLine("8. Inflate Vehicle Wheels");
+			Console.WriteLine("9. Show Vehicle details");
+			Console.WriteLine("10. Exit");
+		}
+
+		public MenuChoice ReadValidOption() => InputValidator.GetValidMenuChoice();
+		public string GetLicenseNumberFromUser() => InputValidator.GetLicenseNumber();
+		public string GetVehicleModelFromUser() => InputValidator.GetVehicleModel(); public string GetVehicleType() => InputValidator.GetVehicleType();
+
+		public Dictionary<string, string> GetParametersFromUser(Dictionary<string, string> paramTemplate)
+		{
+			Dictionary<string, string> userInputs = new();
+
+			foreach (var param in paramTemplate)
+			{
+				string key = param.Key;
+				string prompt = param.Value;
+				string input = string.Empty;
+				bool isValid = false;
+
+				while (!isValid)
 				{
-								public void PrintMenu()
-								{
-												Console.WriteLine("=== Garage Management System ===");
-												Console.WriteLine("1. Load vehicles from file");
-												Console.WriteLine("2. Add New Vehicle");
-												Console.WriteLine("3. Show All Vehicles");
-												Console.WriteLine("4. Update Vehicle Status");
-												Console.WriteLine("5. Refuel Vehicle");
-												Console.WriteLine("6. Recharge Vehicle");
-												Console.WriteLine("7. Inflate Vehicle Wheels");
-												Console.WriteLine("8. Show Vehicle details");
-												Console.WriteLine("9. Exit");
-								}
-								public string ReadValidOption()
-								{
-																int numOfChoises = Enum.GetValues(typeof(MenuChoice)).Length;
-																int userChoise;
-																bool isValidInput;
-																do
-																{
-																				Console.Write($"Please choose a number between {1} and {numOfChoises}: ");
-																				isValidInput = int.TryParse(Console.ReadLine(), out userChoise) && userChoise >= 1 && userChoise <= numOfChoises;
+					try
+					{
+						if (key.ToLower().Contains("percentage") || key.ToLower().Contains("air") || key.ToLower().Contains("capacity"))
+						{
+							Console.WriteLine(prompt);
+							input = Console.ReadLine()?.Trim() ?? string.Empty;
+							if (!float.TryParse(input, out float number) || number < 0)
+								throw new FormatException("Please enter a valid positive number.");
+						}
+						else if (key.ToLower().Contains("hazard"))
+						{
+							Console.WriteLine(prompt);
+							input = Console.ReadLine()?.Trim().ToLower() ?? string.Empty;
+							if (input != "yes" && input != "no")
+								throw new FormatException("Please answer Yes or No.");
+						}
+						else if (key.ToLower().Contains("license"))
+						{
+							var licenseType = InputValidator.GetValidEnumFromUser<LicenseType>(prompt);
+							input = licenseType.ToString();
+						}
+						else if (key.ToLower().Contains("fuel"))
+						{
+							var fuelType = InputValidator.GetValidEnumFromUser<FuelType>(prompt);
+							input = fuelType.ToString();
+						}
+						else if (key.ToLower().Contains("phone"))
+						{
+							Console.WriteLine(prompt);
+							input = Console.ReadLine()?.Trim() ?? string.Empty;
 
-																				if (!isValidInput)
-																				{
-																								Console.Write($"Invalid input. ");
-																				}
-																}
+							if (!System.Text.RegularExpressions.Regex.IsMatch(input, @"^\d{7,15}$"))
+								throw new FormatException("Phone number must contain only digits (7–15 digits).");
+						}
+						else
+						{
+							Console.WriteLine(prompt);
+							input = Console.ReadLine()?.Trim() ?? string.Empty;
+							if (string.IsNullOrWhiteSpace(input))
+								throw new FormatException("Input cannot be empty.");
+						}
 
-																while (!isValidInput);
-												return userChoise.ToString();
-								}
-								public string GetLicenseNumberFromUser()
-								{
-												string licenseNumber;
-												bool isValidInput = false;
+						isValid = true;
+					}
+					catch (FormatException ex)
+					{
+						Console.WriteLine($"❌ {ex.Message} Try again.");
+					}
+				}
 
-												do
-												{
-																Console.WriteLine("Please enter the vehicle's license number:");
-																licenseNumber = Console.ReadLine();
+				userInputs[key] = input;
+			}
 
-																try
-																{
-																				ValidateLicenseNumber(licenseNumber);
-																				isValidInput = true;
-																}
-																catch (ArgumentException ex)
-																{
-																				Console.WriteLine($"Invalid input: {ex.Message}");
-																				Console.WriteLine("Please try again.");
-																}
-												} while (!isValidInput);
+			return userInputs;
+		}
+		public void PrintVehiclesTypes(List<string> types)
+		{
+			for (int i = 0; i < types.Count; i++)
+			{
+				Console.WriteLine($"{i + 1}: {types[i]}");
+			}
+		}
 
-												return licenseNumber;
-								}
-								public string GetVehicleModelFromUser(int i_NumberOfSupportedModels)
-								{
-												string model;
-												bool isValidInput = false;
+		public void PrintVehicleStatuses()
+		{
+			int i = 1;
+			foreach (VehicleStatus status in Enum.GetValues(typeof(VehicleStatus)))
+			{
+				Console.WriteLine($"{i++} - {status}");
+			}
+		}
 
-												do
-												{
-																Console.WriteLine("Please enter the vehicle's model:");
-																model = Console.ReadLine();
+		public void LoadVehicles(Garage garage, string filePath)
+		{
+			try
+			{
+				garage.LoadVehiclesFromFile(filePath);
+				Console.WriteLine("Vehicles loaded from file successfully.");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"Error loading vehicles: {ex.Message}");
+			}
+		}
 
-																try
-																{
-																				if (string.IsNullOrEmpty(model))
-																				{
-																								throw new ArgumentException("Input cannot be empty");
-																				}
+		public void AddNewVehicle(Garage garage)
+		{
+			try
+			{
+				string license = GetLicenseNumberFromUser();
+				if (garage.IsVehicleExistInGarage(license))
+				{
+					Console.WriteLine("Vehicle already exists in the garage.");
+					garage.ModifyVehicleStatus(license, VehicleStatus.InRepair);
+					return;
+				}
 
-																				// Check if the model is a number and in range
-																				if (int.TryParse(model, out int modelNumber))
-																				{
-																								if (modelNumber < 1 || modelNumber > i_NumberOfSupportedModels)
-																								{
-																												throw new ValueRangeException(1, i_NumberOfSupportedModels, modelNumber);
-																								}
-																				}
+				PrintVehiclesTypes(VehicleCreator.SupportedTypes);
+				int choice = InputValidator.GetValidIntInRange("Please choose which type of vehicle you would like to bring: ", 1, VehicleCreator.SupportedTypes.Count);
+				string type = VehicleCreator.SupportedTypes[choice - 1];
+				string model = GetVehicleModelFromUser();
 
-																				isValidInput = true;
-																}
-																catch (ValueRangeException)
-																{
-																				Console.WriteLine($"The value is not in the valid range (1 - {i_NumberOfSupportedModels}). Please enter again.");
-																}
-																catch (ArgumentException ex)
-																{
-																				Console.WriteLine($"Invalid input: {ex.Message}, Please enter again.");
-																}
-												} while (!isValidInput);
+				Vehicle vehicle = VehicleCreator.CreateVehicle(type, license, model);
+				vehicle.UpdateVehicleProperties(GetParametersFromUser(vehicle.CreateParametersDictForUser()));
 
-												return model;
-								}
-								public void LoadVehicles(Garage i_Garage, string filePath)
-								{
-												if (File.Exists(filePath))
-												{
-																try
-																{
-																				i_Garage.LoadVehiclesFromFile(filePath);
-																}
+				CustomerInfo customer = new CustomerInfo();
+				Dictionary<string, string> customerInputs = GetParametersFromUser(customer.CreateParametersDictForUser());
+				customer.UpdateCustomerParams(customerInputs);
 
-																catch (IOException ex)
-																{
-																				Console.WriteLine($"Error opening file: {ex.Message}");
-																}
-																catch (UnauthorizedAccessException ex)
-																{
-																				Console.WriteLine($"Access denied: {ex.Message}");
-																}
+				garage.AddCustomer(customer);
+				garage.AddVehicleToVehiclesInfo(vehicle, customer, VehicleStatus.InRepair);
 
-												}
-								}
-								public void AddNewVehicle(Garage i_Garage)
-								{
-												string vehicleLicenseNumber = GetLicenseNumberFromUser();
-												bool isExist = i_Garage.IsVehicleExistInGarage(vehicleLicenseNumber);
+				Console.WriteLine("New vehicle added successfully.");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"Error adding vehicle: {ex.Message}");
+			}
+		}
 
-												if (isExist)
-												{
-																Console.WriteLine("This vehicle already exist in the garage!");
-																i_Garage.ModifyVehicleStatus(vehicleLicenseNumber, VehicleStatus.InRepair);
-												}
-												else //The car not exist
-												{
-																PrintVehiclesTypes(VehicleCreator.SupportedTypes);
-																string choosenVehicleByUser = GetVehicleType();
-																string vehicleModel = GetVehicleModelFromUser(VehicleCreator.SupportedTypes.Count);
+		public void ShowAllVehicles(Garage garage)
+		{
+			try { garage.PrintAllVehicles(); }
+			catch (Exception ex) { Console.WriteLine($"Error showing vehicles: {ex.Message}"); }
+		}
 
-																//Vehicle create and params:
-																Vehicle newVehicle = VehicleCreator.CreateVehicle(choosenVehicleByUser, vehicleLicenseNumber, vehicleModel);
-																Dictionary<string, string> DataMembersDict = newVehicle.CreateParametersDictForUser();
-																Dictionary<string, string> userInputDictionaryForVehicle = GetParametersFromUser(DataMembersDict);
-																newVehicle.UpdateVehicleProperties(userInputDictionaryForVehicle);
+		public void UpdateVehicleStatus(Garage garage)
+		{
+			string license = GetLicenseNumberFromUser();
+			if (!garage.IsVehicleExistInGarage(license)) throw new ArgumentException("Vehicle doesn't exist in the garage.");
 
-																//Customer create and params:
-																CustomerInfo newCustomer = new CustomerInfo();
-																Dictionary<string,string> customerParamsDict = newCustomer.CreateParametersDictForUser();
-																Dictionary<string, string> userInputDictionaryForCustomerInfo = GetParametersFromUser(customerParamsDict);
-																i_Garage.AddCustomer(newCustomer);
+			Console.WriteLine("Please select the new status:");
+			PrintVehicleStatuses();
+			int choice = InputValidator.GetValidIntInRange("Your Choice: ", 1, Enum.GetValues(typeof(VehicleStatus)).Length);
+			garage.ModifyVehicleStatus(license, (VehicleStatus)choice);
+		}
 
-																i_Garage.AddVehicleToVehiclesInfo(newVehicle, newCustomer, VehicleStatus.InRepair);
-												}
-								}
+		public void InflateAirPressureToMax(Garage garage)
+		{
+			string license = GetLicenseNumberFromUser();
+			if (!garage.IsVehicleExistInGarage(license)) { Console.WriteLine("Vehicle not found in the garage."); return; }
 
-								public void PrintVehiclesTypes(List<string> i_VehiclesTypes)
-								{
-												int i = 1;
+			foreach (var wheel in garage.GetVehicleInfo(license).Vehicle.Wheels)
+				wheel.InflateToMax();
 
-												foreach (string vehicleType in i_VehiclesTypes)
-												{
-																Console.WriteLine($"{i}: {vehicleType}");
-																i++;
-												}
-								}
-								public string GetVehicleType()
-								{
-												Console.WriteLine("Please choose which type of vehicle you would like to bring:");
-												if (Enum.TryParse(Console.ReadLine(), out SupportedTypes chosenVehicle))
-												{
-																if (!((int)chosenVehicle >= 1 && (int)chosenVehicle <= Enum.GetValues(typeof(SupportedTypes)).Length))
-																{
-																				throw new ValueRangeException(1, Enum.GetValues(typeof(SupportedTypes)).Length, (int)chosenVehicle);
-																}
-												}
-												string userChoosenVehicle = chosenVehicle.ToString();
-												return userChoosenVehicle;
-								}
+			Console.WriteLine("All wheels inflated to max air pressure.");
+		}
 
-								public Dictionary<string, string> GetParametersFromUser(Dictionary<string, string> i_DicParam)
-								{
-												string input;
-												Dictionary<string, string> userInputParams = new Dictionary<string, string>();
-												foreach (var pairParam in i_DicParam)
-												{
-																Console.WriteLine(pairParam.Value);
-																input = Console.ReadLine();
-																userInputParams.Add(pairParam.Key, input);
-												}
-												return userInputParams;
-								}
+		public void ShowVehicleDetails(Garage garage)
+		{
+			string license = GetLicenseNumberFromUser();
+			if (!garage.IsVehicleExistInGarage(license)) { Console.WriteLine("Vehicle not found in the garage."); return; }
 
-								public void ShowAllVehicles(Garage i_Garage)
-								{
-												i_Garage.PrintAllVehicles();
-											
-								}
-								public void PrintVehicleStatuses()
-								{
-												var statuses = Enum.GetValues(typeof(VehicleStatus)).Cast<VehicleStatus>().ToArray();
-												int i = 1;
+			VehicleInfo info = garage.GetVehicleInfo(license);
+			Console.WriteLine(info.ToString());
+		}
 
-												foreach (var status in statuses)
-												{
-																Console.WriteLine($"{i++} - {status}");
-												}
-								}
+		public void RefuelVehicle(Garage garage)
+		{
+			string license = GetLicenseNumberFromUser();
+			if (!garage.IsVehicleExistInGarage(license))
+			{
+				Console.WriteLine("Vehicle not found in the garage.");
+				return;
+			}
 
-								public void UpdateVehicleStatus(Garage i_Garage)
-								{
-												string vehicleLicenseNumber = GetLicenseNumberFromUser();
+			VehicleInfo info = garage.GetVehicleInfo(license);
+			if (info.Vehicle.Engine is not FuelEngine engine)
+			{
+				Console.WriteLine("❌ This vehicle does not support refueling with fuel.");
+				return;
+			}
 
-												if (i_Garage.IsVehicleExistInGarage(vehicleLicenseNumber))
-												{
+			Console.WriteLine("Available fuel types:");
+			foreach (string name in Enum.GetNames(typeof(FuelType)))
+			{
+				Console.WriteLine("- " + name);
+			}
 
-																//Check if the licensenumber exist in the garage
-																Console.WriteLine("Please select the new status from the following options: ");
+			FuelType type = InputValidator.GetValidFuelType();
+			if (type != engine.FuelType)
+			{
+				Console.WriteLine($"❌ This vehicle requires {engine.FuelType}, you entered {type}.");
+				return;
+			}
 
-																PrintVehicleStatuses();
+			float amount = InputValidator.GetPositiveFloat("Enter amount to refuel:");
+			try
+			{
+				engine.AddEnergy(amount);
+				Console.WriteLine("✅ Vehicle refueled successfully.");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"Error: {ex.Message}");
+			}
+		}
 
-																int choise;
-																bool correct;
+		public void RechargeVehicle(Garage garage)
+		{
+			string license = GetLicenseNumberFromUser();
+			if (!garage.IsVehicleExistInGarage(license))
+			{
+				Console.WriteLine("Vehicle not found in the garage.");
+				return;
+			}
 
-																do
-																{
-																				Console.WriteLine("Your Choise: ");
+			VehicleInfo info = garage.GetVehicleInfo(license);
+			if (info.Vehicle.Engine is not ElectricEngine)
+			{
+				Console.WriteLine("❌ This vehicle does not support recharging.");
+				return;
+			}
 
-																				correct = int.TryParse(Console.ReadLine(), out choise) && choise >= 1 && choise <= Enum.GetValues(typeof(VehicleStatus)).Length;
-																				if(!correct)
-																				{
-																								Console.WriteLine("Invalid input");
-																				}
-																}
-																while (!correct);
+			float amount = InputValidator.GetPositiveFloat("Enter amount of charge to add (in hours):");
+			try
+			{
+				garage.RechargeVehicle(license, amount);
+				Console.WriteLine("✅ Vehicle recharged successfully.");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"Error: {ex.Message}");
+			}
+		}
 
-																i_Garage.ModifyVehicleStatus(vehicleLicenseNumber, (VehicleStatus)choise);
-												}
-												else
-												{
-																throw new ArgumentException("Vehicle doesn't exist in the garage.");
-
-												}
-        }
-
-								public void InflateAirPressureToMax(Garage i_Garage)
-								{
-
-								}
-								public void RefuelVehicle(Garage i_Garage)
-								{
-
-								}
-								public void RechargeVehicle(Garage i_Garage)
-								{
-
-								}
-								public void ShowVehicleDetails(Garage i_garage)
-								{
-
-								}
-								private void ValidateLicenseNumber(string i_LicenseNumber)
-								{
-												if (string.IsNullOrEmpty(i_LicenseNumber))
-												{
-																throw new ArgumentException("License number cannot be empty");
-												}
-								}
-
-
-								}
+		public void ShowVehiclesByStatus(Garage garage)
+		{
+			try
+			{
+				Console.WriteLine("Select vehicle status to filter:");
+				PrintVehicleStatuses();
+				int choice = InputValidator.GetValidIntInRange("Your choice: ", 1, Enum.GetValues(typeof(VehicleStatus)).Length);
+				foreach (var info in garage.GetVehiclesByStatus((VehicleStatus)choice).Values)
+					Console.WriteLine(info.ToString());
+			}
+			catch (Exception ex) { Console.WriteLine($"Error: {ex.Message}"); }
+		}
+	}
 }

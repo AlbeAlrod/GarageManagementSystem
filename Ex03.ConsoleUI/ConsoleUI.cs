@@ -1,92 +1,86 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ex03.GarageLogic;
-using System.Linq.Expressions;
+using Ex03.ConsoleUI;
 
 namespace Ex03.ConsoleUI
 {
-				public class ConsoleUI
-				{
-								private readonly Garage garage;
-								public ConsoleUI()
-								{
-												garage = new Garage();
-								}
-								public void Start()
-								{
-								ConsoleUIHelper consoleUIHelper = new ConsoleUIHelper();
-								bool isSessionActive = true;
-								string filePath = "C:\\Users\\Guy\\source\\repos\\Ex03-Garage\\Vehicles.txt";
+    public class ConsoleUI
+    {
+        private readonly Garage r_Garage;
+        private readonly ConsoleUIHelper r_Helper;
 
-												while (isSessionActive)
-												{
-																try
-																{
-																				consoleUIHelper.PrintMenu();
+        public ConsoleUI()
+        {
+            r_Garage = new Garage();
+            r_Helper = new ConsoleUIHelper();
+        }
 
-																				bool isValid = Enum.TryParse(Console.ReadLine(), out MenuChoice userChoice);
-																				if (!isValid)
-																				{
-																								throw new FormatException("You Typed invalid number!");
-																				}
-																				switch (userChoice)
-																				{
-																								case MenuChoice.LoadVehicles:
-																												consoleUIHelper.LoadVehicles(garage, filePath);
-																												break;
-																								case MenuChoice.AddNewVehicle:
-																												consoleUIHelper.AddNewVehicle(garage);
-																												break;
-																								case MenuChoice.ShowAllVehicles:
-																												consoleUIHelper.ShowAllVehicles(garage);
-																												break;
-																								case MenuChoice.UpdateVehicleStatus:
-																												consoleUIHelper.UpdateVehicleStatus(garage);
-																												break;
-																								case MenuChoice.InflateVehicleWheels:
-																												consoleUIHelper.InflateAirPressureToMax(garage);
-																												break;
-																								case MenuChoice.RefuelVehicle:
-																												consoleUIHelper.RefuelVehicle(garage);
-																												break;
-																								case MenuChoice.RechargeVehicle:
-																												consoleUIHelper.RechargeVehicle(garage);
-																												break;
-																								case MenuChoice.ShowVehicleDetails:
-																												consoleUIHelper.ShowVehicleDetails(garage);
-																												break;
-																								case MenuChoice.Exit:
-																												isSessionActive = false;
-																												break;
-																								default:
-																												float invalidValue = (int)userChoice;
-																												throw new ValueRangeException(1, 9, invalidValue);
+        public void Start()
+        {
+            bool isSessionActive = true;
+            string filePath = "Vehicles.txt";
 
-																				}
-																				
-																}
-																catch (FormatException formatE)
-																{
-																				Console.WriteLine($"FormatException: {formatE.Message}");
-																}
-																catch (ArgumentException argumentE)
-																{
-																				Console.WriteLine($"ArgumentException: {argumentE.Message}");
-																}
-																catch (ValueRangeException rangeE)
-																{
-																				Console.WriteLine($"ValueOutOfRangeException: {rangeE.Message}");
-																}
-												}
+            while (isSessionActive)
+            {
+                try
+                {
+                    r_Helper.PrintMenu();
+                    MenuChoice userChoice = r_Helper.ReadValidOption();
 
-												Console.WriteLine("Bye Bye");
-								}
+                    switch (userChoice)
+                    {
+                        case MenuChoice.LoadVehicles:
+                            r_Helper.LoadVehicles(r_Garage, filePath);
+                            break;
 
-								
+                        case MenuChoice.AddNewVehicle:
+                            r_Helper.AddNewVehicle(r_Garage);
+                            break;
 
-				}
+                        case MenuChoice.ShowAllVehicles:
+                            r_Helper.ShowAllVehicles(r_Garage);
+                            break;
+
+                        case MenuChoice.ShowVehiclesByStatus:
+                            r_Helper.ShowVehiclesByStatus(r_Garage);
+                            break;
+
+                        case MenuChoice.UpdateVehicleStatus:
+                            r_Helper.UpdateVehicleStatus(r_Garage);
+                            break;
+
+                        case MenuChoice.InflateVehicleWheels:
+                            r_Helper.InflateAirPressureToMax(r_Garage);
+                            break;
+
+                        case MenuChoice.RefuelVehicle:
+                            r_Helper.RefuelVehicle(r_Garage);
+                            break;
+
+                        case MenuChoice.RechargeVehicle:
+                            r_Helper.RechargeVehicle(r_Garage);
+                            break;
+
+                        case MenuChoice.ShowVehicleDetails:
+                            r_Helper.ShowVehicleDetails(r_Garage);
+                            break;
+
+                        case MenuChoice.Exit:
+                            isSessionActive = false;
+                            break;
+
+                        default:
+                            Console.WriteLine("Invalid choice.");
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+            }
+
+            Console.WriteLine("Bye Bye");
+        }
+    }
 }
