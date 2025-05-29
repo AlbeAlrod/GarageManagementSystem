@@ -65,13 +65,13 @@
 		AA,
 		B1
 	}
+public enum TireModel
+{
+	Michelin,
+	Goodyear,
+	Continental,
+	Pirelli,
+	Bridgestone
+}
 
-	public enum TireModel
-	{
-		Michelin,
-		Goodyear,
-		Continental,
-		Pirelli,
-		Bridgestone
-	}
 }

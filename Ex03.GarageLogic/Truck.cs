@@ -1,20 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Ex03.GarageLogic
 {
 	public class Truck : Vehicle
 	{
 		private const int k_NumberOfWheels = 12;
-		private const float k_MaxFuelCapacity = 120f;
-		private const FuelType k_TruckFuelType = FuelType.Solar;
+		private const float k_MaxAirPressure = 27f;
+		private const float k_FuelTankCapacity = 135f;
+		private const FuelType k_FuelType = FuelType.Solar;
 
 		private bool m_HazardousMaterials;
 		private float m_CargoCapacity;
 
-		public Truck(string i_Model, string i_LicenseNumber)
-			: base(i_Model, i_LicenseNumber, new FuelEngine(k_TruckFuelType, k_MaxFuelCapacity), k_NumberOfWheels)
+
+		public Truck(string i_Model, string i_LicenseNumber) : base(i_Model, i_LicenseNumber, new FuelEngine(k_FuelType, k_FuelTankCapacity), k_NumberOfWheels)
 		{
+			m_Wheels = new List<Wheel>(k_NumberOfWheels);
+			for (int i = 0; i < k_NumberOfWheels; i++)
+			{
+				m_Wheels.Add(new Wheel(k_MaxAirPressure));
+			}
 		}
 
 
@@ -41,8 +48,16 @@ namespace Ex03.GarageLogic
 		{
 			Dictionary<string, string> paramsDict = base.CreateParametersDictForUser();
 			paramsDict.Add("HazardousMaterials", "Does the truck carry hazardous materials? Yes/No:");
-			paramsDict.Add("CargoCapacity", "Enter the cargo capacity:");
+			paramsDict.Add("CargoCapacity", "Enter the cargo capacity (in cubic meters):");
 			return paramsDict;
+		}
+
+		public override string GetDetails()
+		{
+			StringBuilder details = new StringBuilder(base.GetDetails());
+			details.AppendLine($"Carries hazardous materials: {(m_HazardousMaterials ? "Yes" : "No")}");
+			details.AppendLine($"Cargo capacity: {m_CargoCapacity} cubic meters");
+			return details.ToString();
 		}
 	}
 }

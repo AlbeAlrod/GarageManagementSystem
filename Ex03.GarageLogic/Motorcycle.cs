@@ -15,9 +15,13 @@ namespace Ex03.GarageLogic
 		public MotorcycleLicenseType m_LicenseType { get; set; }
 		public int m_EngineCapacity { get; set; }
 
-		public Motorcycle(string i_Model, string i_LicenseNumber, Engine i_Engine) : base(i_Model, i_LicenseNumber, i_Engine, i_NumberOfWheels)
+		public Motorcycle(string i_Model, string i_LicenseNumber, Engine i_Engine) : base(i_Model, i_LicenseNumber, i_Engine, 2)
 		{
-			m_Wheels = new List<Wheel>(2);
+			m_Wheels = new List<Wheel>();
+			for (int i = 0; i < 2; i++)
+			{
+				m_Wheels.Add(new Wheel(30f));
+			}
 		}
 
 		public override Dictionary<string, string> CreatePropertiesDictionaryFromLine(string[] i_Properties)
@@ -44,6 +48,13 @@ namespace Ex03.GarageLogic
 			return paramsDict;
 		}
 
+		public override string GetDetails()
+		{
+			StringBuilder details = new StringBuilder(base.GetDetails());
+			details.AppendLine($"License type: {m_LicenseType}");
+			details.AppendLine($"Engine capacity: {m_EngineCapacity} cc");
+			return details.ToString();
+		}
 
 
 	}

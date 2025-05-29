@@ -68,9 +68,20 @@ namespace Ex03.ConsoleUI
 						{
 							Console.WriteLine(prompt);
 							input = Console.ReadLine()?.Trim() ?? string.Empty;
-
 							if (!System.Text.RegularExpressions.Regex.IsMatch(input, @"^\d{7,15}$"))
 								throw new FormatException("Phone number must contain only digits (7–15 digits).");
+						}
+						else if (key.ToLower().Contains("color"))
+						{
+							var colors = Enum.GetValues(typeof(CarColor));
+							Console.WriteLine("Choose car color:");
+							for (int i = 0; i < colors.Length; i++)
+							{
+								Console.WriteLine($"{i + 1}. {colors.GetValue(i)}");
+							}
+							int choice = InputValidator.GetValidIntInRange("Enter number for car color:", 1, colors.Length);
+							input = colors.GetValue(choice - 1).ToString();
+							Console.WriteLine($"Car color set to: {input}");
 						}
 						else
 						{
@@ -178,21 +189,44 @@ namespace Ex03.ConsoleUI
 		public void InflateAirPressureToMax(Garage garage)
 		{
 			string license = GetLicenseNumberFromUser();
-			if (!garage.IsVehicleExistInGarage(license)) { Console.WriteLine("Vehicle not found in the garage."); return; }
+			if (!garage.IsVehicleExistInGarage(license))
+			{
+				Console.WriteLine("Vehicle not found in the garage.");
+				return;
+			}
 
-			foreach (var wheel in garage.GetVehicleInfo(license).Vehicle.Wheels)
+			var wheels = garage.GetVehicleInfo(license).Vehicle.Wheels;
+
+			foreach (var wheel in wheels)
+			{
 				wheel.InflateToMax();
+			}
 
 			Console.WriteLine("All wheels inflated to max air pressure.");
-		}
+			Console.WriteLine("Current air pressures of each wheel:");
 
+			int i = 1;
+			foreach (var wheel in wheels)
+			{
+				Console.WriteLine($"Wheel {i}: Manufacturer: {wheel.ManufacturerName}, Current Air Pressure: {wheel.CurrentAirPressure} / Max Air Pressure: {wheel.MaxAirPressure}");
+				i++;
+			}
+		}
 		public void ShowVehicleDetails(Garage garage)
 		{
 			string license = GetLicenseNumberFromUser();
-			if (!garage.IsVehicleExistInGarage(license)) { Console.WriteLine("Vehicle not found in the garage."); return; }
+			if (!garage.IsVehicleExistInGarage(license))
+			{
+				Console.WriteLine("Vehicle not found in the garage.");
+				return;
+			}
 
 			VehicleInfo info = garage.GetVehicleInfo(license);
-			Console.WriteLine(info.ToString());
+			Console.WriteLine(info.Vehicle.GetDetails());
+
+			Console.WriteLine($"Owner name: {info.Owner.PersonName}");
+			Console.WriteLine($"Owner phone: {info.Owner.PhoneNumber}");
+			Console.WriteLine($"Vehicle status: {info.VehicleStatus}");
 		}
 
 		public void RefuelVehicle(Garage garage)
@@ -224,7 +258,7 @@ namespace Ex03.ConsoleUI
 				return;
 			}
 
-			float amount = InputValidator.GetPositiveFloat("Enter amount to refuel:");
+			float amount = InputValidator.GetPositiveFloat("Enter amount to refuel(liters):");
 			try
 			{
 				engine.AddEnergy(amount);
