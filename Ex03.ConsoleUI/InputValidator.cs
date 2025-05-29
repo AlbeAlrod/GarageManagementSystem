@@ -9,6 +9,7 @@ namespace Ex03.ConsoleUI
         public static MenuChoice GetValidMenuChoice()
         {
             int numOfChoices = Enum.GetValues(typeof(MenuChoice)).Length;
+
             while (true)
             {
                 Console.Write($"Please choose a number between 1 and {numOfChoices}: ");
@@ -23,11 +24,11 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public static string GetNonEmptyString(string prompt)
+        public static string GetNonEmptyString(string i_Prompt)
         {
             while (true)
             {
-                Console.WriteLine(prompt);
+                Console.WriteLine(i_Prompt);
                 string? input = Console.ReadLine();
 
                 if (!string.IsNullOrWhiteSpace(input))
@@ -57,9 +58,9 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        private static void ValidateLicenseNumber(string licenseNumber)
+        private static void ValidateLicenseNumber(string i_LicenseNumber)
         {
-            if (!int.TryParse(licenseNumber, out int result) || result <= 0)
+            if (!int.TryParse(i_LicenseNumber, out int result) || result <= 0)
             {
                 throw new ArgumentException("License number must be a positive whole number.");
             }
@@ -94,14 +95,14 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public static int GetValidIntInRange(string prompt, int min, int max)
+        public static int GetValidIntInRange(string i_Prompt, int i_Min, int i_Max)
         {
             while (true)
             {
-                Console.WriteLine(prompt);
+                Console.WriteLine(i_Prompt);
                 string? input = Console.ReadLine();
 
-                if (int.TryParse(input, out int choice) && choice >= min && choice <= max)
+                if (int.TryParse(input, out int choice) && choice >= i_Min && choice <= i_Max)
                 {
                     return choice;
                 }
@@ -110,11 +111,11 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public static float GetPositiveFloat(string prompt)
+        public static float GetPositiveFloat(string i_Prompt)
         {
             while (true)
             {
-                Console.WriteLine(prompt);
+                Console.WriteLine(i_Prompt);
                 string? input = Console.ReadLine();
 
                 if (float.TryParse(input, out float value) && value > 0)
@@ -159,6 +160,7 @@ namespace Ex03.ConsoleUI
         {
             return GetNonEmptyString("Please enter owner name:");
         }
+
         public static string GetCustomerName()
         {
             return GetNonEmptyString("Please enter owner name:");
@@ -169,28 +171,27 @@ namespace Ex03.ConsoleUI
             return GetNonEmptyString("Please enter owner phone number:");
         }
 
-        public static TEnum GetValidEnumFromUser<TEnum>(string prompt) where TEnum : struct, Enum
-{
-	bool isValid = false;
-	TEnum result = default;
+        public static TEnum GetValidEnumFromUser<TEnum>(string i_Prompt) where TEnum : struct, Enum
+        {
+            bool isEnumValueValid = false;
+            TEnum selectedEnumValue = default;
 
-	while (!isValid)
-	{
-		Console.WriteLine($"{prompt} ({string.Join("/", Enum.GetNames(typeof(TEnum)))})");
-		string? input = Console.ReadLine()?.Trim();
+            while (!isEnumValueValid)
+            {
+                Console.WriteLine($"{i_Prompt} ({string.Join("/", Enum.GetNames(typeof(TEnum)))})");
+                string? userInput = Console.ReadLine()?.Trim();
 
-		if (Enum.TryParse<TEnum>(input, true, out result) && Enum.IsDefined(typeof(TEnum), result))
-		{
-			isValid = true;
-		}
-		else
-		{
-			Console.WriteLine("❌ Invalid value. Please try again.");
-		}
-	}
+                if (Enum.TryParse<TEnum>(userInput, true, out selectedEnumValue) && Enum.IsDefined(typeof(TEnum), selectedEnumValue))
+                {
+                    isEnumValueValid = true;
+                }
+                else
+                {
+                    Console.WriteLine("❌ Invalid value. Please try again.");
+                }
+            }
 
-	return result;
-}
-
+            return selectedEnumValue;
+        }
     }
 }

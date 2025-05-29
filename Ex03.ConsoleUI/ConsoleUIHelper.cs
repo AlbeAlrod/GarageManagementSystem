@@ -83,6 +83,13 @@ namespace Ex03.ConsoleUI
 							input = colors.GetValue(choice - 1).ToString();
 							Console.WriteLine($"Car color set to: {input}");
 						}
+						else if (key.ToLower().Contains("numberofdoors"))
+						{
+							Console.WriteLine(prompt);
+							input = Console.ReadLine()?.Trim() ?? string.Empty;
+							if (!int.TryParse(input, out int doors) || doors < Car.k_MinDoors || doors > Car.k_MaxDoors)
+								throw new FormatException($"Number of doors must be a number between {Car.k_MinDoors} and {Car.k_MaxDoors}.");
+						}
 						else
 						{
 							Console.WriteLine(prompt);
@@ -104,20 +111,20 @@ namespace Ex03.ConsoleUI
 
 			return userInputs;
 		}
-		public void PrintVehiclesTypes(List<string> types)
+		public void PrintVehicleTypes(List<string> vehicleTypes)
 		{
-			for (int i = 0; i < types.Count; i++)
+			for (int vehicleTypeIndex = 0; vehicleTypeIndex < vehicleTypes.Count; vehicleTypeIndex++)
 			{
-				Console.WriteLine($"{i + 1}: {types[i]}");
+				Console.WriteLine($"{vehicleTypeIndex + 1}: {vehicleTypes[vehicleTypeIndex]}");
 			}
 		}
 
 		public void PrintVehicleStatuses()
 		{
-			int i = 1;
+			int statusIndex = 1;
 			foreach (VehicleStatus status in Enum.GetValues(typeof(VehicleStatus)))
 			{
-				Console.WriteLine($"{i++} - {status}");
+				Console.WriteLine($"{statusIndex++} - {status}");
 			}
 		}
 
@@ -146,7 +153,7 @@ namespace Ex03.ConsoleUI
 					return;
 				}
 
-				PrintVehiclesTypes(VehicleCreator.SupportedTypes);
+				PrintVehicleTypes(VehicleCreator.SupportedTypes);
 				int choice = InputValidator.GetValidIntInRange("Please choose which type of vehicle you would like to bring: ", 1, VehicleCreator.SupportedTypes.Count);
 				string type = VehicleCreator.SupportedTypes[choice - 1];
 				string model = GetVehicleModelFromUser();
@@ -229,39 +236,43 @@ namespace Ex03.ConsoleUI
 			Console.WriteLine($"Vehicle status: {info.VehicleStatus}");
 		}
 
-		public void RefuelVehicle(Garage garage)
+		public void RefuelVehicle(Garage i_Garage)
 		{
-			string license = GetLicenseNumberFromUser();
-			if (!garage.IsVehicleExistInGarage(license))
+			string licenseNumber = GetLicenseNumberFromUser();
+
+			if (!i_Garage.IsVehicleExistInGarage(licenseNumber))
 			{
 				Console.WriteLine("Vehicle not found in the garage.");
 				return;
 			}
 
-			VehicleInfo info = garage.GetVehicleInfo(license);
-			if (info.Vehicle.Engine is not FuelEngine engine)
+			VehicleInfo vehicleInfo = i_Garage.GetVehicleInfo(licenseNumber);
+
+			if (vehicleInfo.Vehicle.Engine is not FuelEngine fuelEngine)
 			{
 				Console.WriteLine("❌ This vehicle does not support refueling with fuel.");
 				return;
 			}
 
 			Console.WriteLine("Available fuel types:");
-			foreach (string name in Enum.GetNames(typeof(FuelType)))
+			foreach (string fuelTypeName in Enum.GetNames(typeof(FuelType)))
 			{
-				Console.WriteLine("- " + name);
+				Console.WriteLine("- " + fuelTypeName);
 			}
 
-			FuelType type = InputValidator.GetValidFuelType();
-			if (type != engine.FuelType)
+			FuelType selectedFuelType = InputValidator.GetValidFuelType();
+
+			if (selectedFuelType != fuelEngine.FuelType)
 			{
-				Console.WriteLine($"❌ This vehicle requires {engine.FuelType}, you entered {type}.");
+				Console.WriteLine($"❌ This vehicle requires {fuelEngine.FuelType}, you entered {selectedFuelType}.");
 				return;
 			}
 
-			float amount = InputValidator.GetPositiveFloat("Enter amount to refuel(liters):");
+			float fuelAmount = InputValidator.GetPositiveFloat("Enter amount to refuel (liters):");
+
 			try
 			{
-				engine.AddEnergy(amount);
+				fuelEngine.AddEnergy(fuelAmount);
 				Console.WriteLine("✅ Vehicle refueled successfully.");
 			}
 			catch (Exception ex)

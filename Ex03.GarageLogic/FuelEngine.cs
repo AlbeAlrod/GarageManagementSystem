@@ -1,33 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using Ex03.GarageLogic;
 
 namespace Ex03.GarageLogic
 {
-	public class FuelEngine : Engine
-	{
-		public FuelType FuelType { get; }
+    public class FuelEngine : Engine
+    {
+        public FuelType FuelType { get; }
 
-		public override float CurrentEnergy { get; protected set; }
-		public override float MaxCapacity { get; protected set; }
+        public override float CurrentEnergy { get; protected set; }
+        public override float MaxCapacity { get; protected set; }
 
-		public FuelEngine(FuelType fuelType, float maxCapacity)
-		{
-			FuelType = fuelType;
-			MaxCapacity = maxCapacity;
-			CurrentEnergy = 0f;
-		}
+        public FuelEngine(FuelType i_FuelType, float i_MaxCapacity)
+        {
+            FuelType = i_FuelType;
+            MaxCapacity = i_MaxCapacity;
+            CurrentEnergy = 0f;
+        }
 
-		public override void AddEnergy(float i_Quantity)
-		{
-			if (i_Quantity < 0 || CurrentEnergy + i_Quantity > MaxCapacity)
-			{
-				throw new ArgumentOutOfRangeException("Fuel amount exceeds capacity");
-			}
+        public override void AddEnergy(float i_AmountToAdd)
+        {
+            if (i_AmountToAdd < 0 || CurrentEnergy + i_AmountToAdd > MaxCapacity)
+            {
+                throw new ArgumentOutOfRangeException(nameof(i_AmountToAdd), "Fuel amount exceeds capacity");
+            }
 
-			CurrentEnergy += i_Quantity;
-		}
-
-
-	}
+            CurrentEnergy += i_AmountToAdd;
+        }
+    }
 }

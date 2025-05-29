@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Ex03.GarageLogic;
 
 
 namespace Ex03.GarageLogic
@@ -20,6 +19,23 @@ namespace Ex03.GarageLogic
 			{
 				m_Wheels.Add(new Wheel(k_MaxAirPressure));
 			}
+		}
+
+		public override Dictionary<string, string> CreatePropertiesDictionaryFromLine(string[] i_Properties)
+		{
+			var keyValuePairs = base.CreatePropertiesDictionaryFromLine(i_Properties);
+
+			if (i_Properties.Length > 8)
+				keyValuePairs.Add("LicenseType", i_Properties[8]);
+			else
+				keyValuePairs.Add("LicenseType", string.Empty);
+
+			if (i_Properties.Length > 9)
+				keyValuePairs.Add("EngineCapacity", i_Properties[9]);
+			else
+				keyValuePairs.Add("EngineCapacity", string.Empty);
+
+			return keyValuePairs;
 		}
 	}
 }

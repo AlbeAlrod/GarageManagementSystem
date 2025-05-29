@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Ex03.GarageLogic;
 
 namespace Ex03.GarageLogic
 {
@@ -45,6 +43,7 @@ namespace Ex03.GarageLogic
             {
                 throw new ValueRangeException(0, m_MaxAirPressure, i_AmountOfAirPressure);
             }
+
             m_CurrentAirPressure = i_AmountOfAirPressure;
         }
 

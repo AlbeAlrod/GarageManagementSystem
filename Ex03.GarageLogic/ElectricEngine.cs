@@ -1,5 +1,4 @@
 ﻿using System;
-using Ex03.GarageLogic;
 
 namespace Ex03.GarageLogic
 {
@@ -8,20 +7,20 @@ namespace Ex03.GarageLogic
         public override float CurrentEnergy { get; protected set; }
         public override float MaxCapacity { get; protected set; }
 
-        public ElectricEngine(float maxCapacity)
+        public ElectricEngine(float i_MaxCapacity)
         {
-            MaxCapacity = maxCapacity;
+            MaxCapacity = i_MaxCapacity;
             CurrentEnergy = 0f;
         }
 
-        public override void AddEnergy(float i_Quantity)
+        public override void AddEnergy(float i_AmountToAdd)
         {
-            if (i_Quantity < 0 || CurrentEnergy + i_Quantity > MaxCapacity)
+            if (i_AmountToAdd < 0 || CurrentEnergy + i_AmountToAdd > MaxCapacity)
             {
-                throw new ArgumentOutOfRangeException("Charge amount exceeds capacity");
+                throw new ArgumentOutOfRangeException(nameof(i_AmountToAdd), "Charge amount exceeds capacity");
             }
 
-            CurrentEnergy += i_Quantity;
+            CurrentEnergy += i_AmountToAdd;
         }
     }
 }
