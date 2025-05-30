@@ -1,25 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/Ex03.GarageLogic.csproj": {}
+    "C:\\Users\\Guy\\source\\repos\\Ex03-Garage\\Ex03.GarageLogic\\Ex03.GarageLogic.csproj": {}
   },
   "projects": {
-    "/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/Ex03.GarageLogic.csproj": {
+    "C:\\Users\\Guy\\source\\repos\\Ex03-Garage\\Ex03.GarageLogic\\Ex03.GarageLogic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/Ex03.GarageLogic.csproj",
+        "projectUniqueName": "C:\\Users\\Guy\\source\\repos\\Ex03-Garage\\Ex03.GarageLogic\\Ex03.GarageLogic.csproj",
         "projectName": "Ex03.GarageLogic",
-        "projectPath": "/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/Ex03.GarageLogic.csproj",
-        "packagesPath": "/Users/albealrod/.nuget/packages/",
-        "outputPath": "/Users/albealrod/Desktop/B.SC/3rd_year/c#/DN_MTA_2025B_Ex03/GarageManagementSystem/Ex03.GarageLogic/obj/",
+        "projectPath": "C:\\Users\\Guy\\source\\repos\\Ex03-Garage\\Ex03.GarageLogic\\Ex03.GarageLogic.csproj",
+        "packagesPath": "C:\\Users\\Guy\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Guy\\source\\repos\\Ex03-Garage\\Ex03.GarageLogic\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/albealrod/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Guy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -58,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.408/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

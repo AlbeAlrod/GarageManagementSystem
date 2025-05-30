@@ -10,11 +10,14 @@ namespace Ex03.GarageLogic
 	public class Motorcycle : Vehicle
 	{
 		private const int k_NumberOfWheels = 2;
-		private const float k_MaxAirPressure = 30f;
+		private const float k_MaxAirPressure = 100f;
 
 		private MotorcycleLicenseType m_LicenseType { get; set; }
 		private int m_EngineCapacity { get; set; }
-
+  public float MaxAirPressure
+    {
+        get { return k_MaxAirPressure; }
+    }
 		public Motorcycle(string i_Model, string i_LicenseNumber, Engine i_Engine)
 			: base(i_Model, i_LicenseNumber, i_Engine, k_NumberOfWheels)
 		{

@@ -17,6 +17,7 @@ namespace Ex03.GarageLogic
             m_Vehicles.Add(i_Vehicle.LicenseNumber, newVehicleInfo);
         }
 
+								/*
         public void LoadVehiclesFromFile(string i_FilePath)
         {
             string[] lines = File.ReadAllLines(i_FilePath);
@@ -58,8 +59,33 @@ namespace Ex03.GarageLogic
 
             Console.WriteLine("Vehicles loaded successfully.");
         }
+        */
+        
+								public void LoadVehiclesFromFile(string i_FilePath)
+								{
 
-        public bool IsVehicleExistInGarage(string i_LicenseNumber)
+												string[] lines = File.ReadAllLines(i_FilePath);
+          
+												foreach (string line in lines)
+												{
+																string[] vehicleData = line.Split(',');
+																
+																string vehicleType = vehicleData[0].Trim();
+																string licensePlate = vehicleData[1].Trim();
+																string modelName = vehicleData[2].Trim();
+
+																Vehicle newVehicle = VehicleCreator.CreateVehicle(vehicleType, modelName, licensePlate);
+
+																Dictionary<string, string> restProperties = newVehicle.CreatePropertiesDictionaryFromLine(vehicleData);
+
+																newVehicle.UpdateVehicleProperties(restProperties);
+
+																CustomerInfo customer = new CustomerInfo();
+																customer.UpdateCustomerParams(restProperties);
+																AddVehicleToVehiclesInfo(newVehicle, customer, VehicleStatus.InRepair);
+												}
+								}
+								public bool IsVehicleExistInGarage(string i_LicenseNumber)
         {
             return m_Vehicles.ContainsKey(i_LicenseNumber);
         }

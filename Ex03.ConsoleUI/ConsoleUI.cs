@@ -17,14 +17,15 @@ namespace Ex03.ConsoleUI
         public void Start()
         {
             bool isSessionActive = true;
-            string filePath = "../Vehicles.db";
-
+           string filePath = "Vehicles.db";
+          
             while (isSessionActive)
             {
                 try
                 {
                     Console.Clear();
                     r_Helper.PrintMenu();
+
                     MenuChoice userChoice = r_Helper.ReadValidOption();
 
                     Console.Clear();
@@ -73,6 +74,7 @@ namespace Ex03.ConsoleUI
                         Console.ReadKey(true);
                     }
                 }
+
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error: {ex.Message}");

@@ -6,8 +6,6 @@ namespace Ex03.GarageLogic
 {
 	public class FuelMotorcycle : Motorcycle
 	{
-
-		private const float k_MaxAirPressure = 30f;
 		private const float k_FuelTankCapacity = 5.8f;
 		private const FuelType k_FuelType = FuelType.Octan98;
 
@@ -17,10 +15,11 @@ namespace Ex03.GarageLogic
 			m_Wheels = new List<Wheel>(2);
 			for (int i = 0; i < 2; i++)
 			{
-				m_Wheels.Add(new Wheel(k_MaxAirPressure));
+				m_Wheels.Add(new Wheel(MaxAirPressure));
 			}
 		}
 
+								/*
 		public override Dictionary<string, string> CreatePropertiesDictionaryFromLine(string[] i_Properties)
 		{
 			var keyValuePairs = base.CreatePropertiesDictionaryFromLine(i_Properties);
@@ -37,5 +36,6 @@ namespace Ex03.GarageLogic
 
 			return keyValuePairs;
 		}
+								*/
 	}
 }

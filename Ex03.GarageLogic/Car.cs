@@ -9,7 +9,7 @@ namespace Ex03.GarageLogic
 		public const int k_MinDoors = 2;
 		public const int k_MaxDoors = 5;
 		private const int k_NumberOfWheels = 5;
-		private const float k_MaxAirPressure = 30f;
+		private const float k_MaxAirPressure = 100f;
 		private const float k_FuelTankCapacity = 48f;
 		private const FuelType k_FuelType = FuelType.Octan95;
 

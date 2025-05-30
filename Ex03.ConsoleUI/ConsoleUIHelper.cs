@@ -23,7 +23,7 @@ namespace Ex03.ConsoleUI
 
 		public MenuChoice ReadValidOption() => InputValidator.GetValidMenuChoice();
 		public string GetLicenseNumberFromUser() => InputValidator.GetLicenseNumber();
-		public string GetVehicleModelFromUser() => InputValidator.GetVehicleModel(); public string GetVehicleType() => InputValidator.GetVehicleType();
+		public string GetVehicleModelFromUser() => InputValidator.GetVehicleModel();
 
 		public Dictionary<string, string> GetParametersFromUser(Dictionary<string, string> paramTemplate)
 		{
@@ -38,21 +38,27 @@ namespace Ex03.ConsoleUI
 
 				while (!isValid)
 				{
+							Console.WriteLine(prompt);
+
 					try
 					{
 						if (key.ToLower().Contains("percentage") || key.ToLower().Contains("air") || key.ToLower().Contains("capacity"))
 						{
-							Console.WriteLine(prompt);
 							input = Console.ReadLine()?.Trim() ?? string.Empty;
+
 							if (!float.TryParse(input, out float number) || number < 0)
+							{ 
 								throw new FormatException("Please enter a valid positive number.");
+							}
 						}
 						else if (key.ToLower().Contains("hazard"))
 						{
-							Console.WriteLine(prompt);
 							input = Console.ReadLine()?.Trim().ToLower() ?? string.Empty;
+
 							if (input != "yes" && input != "no")
-								throw new FormatException("Please answer Yes or No.");
+							{ 
+								throw new ArgumentException("Please answer Yes or No.");
+							}
 						}
 						else if (key.ToLower().Contains("license"))
 						{
@@ -66,41 +72,48 @@ namespace Ex03.ConsoleUI
 						}
 						else if (key.ToLower().Contains("phone"))
 						{
-							Console.WriteLine(prompt);
 							input = Console.ReadLine()?.Trim() ?? string.Empty;
-							if (!System.Text.RegularExpressions.Regex.IsMatch(input, @"^\d{7,15}$"))
-								throw new FormatException("Phone number must contain only digits (7–15 digits).");
+
+							if (!input.All(char.IsDigit) || input.Length < 7 || input.Length > 15)
+							{
+								throw new ArgumentException("Phone number must contain only digits (7–15 digits).");
+							}
 						}
 						else if (key.ToLower().Contains("color"))
 						{
 							var colors = Enum.GetValues(typeof(CarColor));
-							Console.WriteLine("Choose car color:");
+
 							for (int i = 0; i < colors.Length; i++)
 							{
 								Console.WriteLine($"{i + 1}. {colors.GetValue(i)}");
 							}
+
 							int choice = InputValidator.GetValidIntInRange("Enter number for car color:", 1, colors.Length);
 							input = colors.GetValue(choice - 1).ToString();
+
 							Console.WriteLine($"Car color set to: {input}");
 						}
 						else if (key.ToLower().Contains("numberofdoors"))
 						{
-							Console.WriteLine(prompt);
 							input = Console.ReadLine()?.Trim() ?? string.Empty;
+
 							if (!int.TryParse(input, out int doors) || doors < Car.k_MinDoors || doors > Car.k_MaxDoors)
-								throw new FormatException($"Number of doors must be a number between {Car.k_MinDoors} and {Car.k_MaxDoors}.");
+							{ 
+								throw new ValueRangeException(Car.k_MinDoors, Car.k_MaxDoors, doors);
+							}
 						}
 						else
 						{
-							Console.WriteLine(prompt);
 							input = Console.ReadLine()?.Trim() ?? string.Empty;
 							if (string.IsNullOrWhiteSpace(input))
-								throw new FormatException("Input cannot be empty.");
+							{ 
+								throw new ArgumentException("Input cannot be empty.");
+							}
 						}
 
 						isValid = true;
 					}
-					catch (FormatException ex)
+					catch (ArgumentException ex)
 					{
 						Console.WriteLine($"❌ {ex.Message} Try again.");
 					}
@@ -158,7 +171,7 @@ namespace Ex03.ConsoleUI
 				string type = VehicleCreator.SupportedTypes[choice - 1];
 				string model = GetVehicleModelFromUser();
 
-				Vehicle vehicle = VehicleCreator.CreateVehicle(type, license, model);
+				Vehicle vehicle = VehicleCreator.CreateVehicle(type, model, license);
 				vehicle.UpdateVehicleProperties(GetParametersFromUser(vehicle.CreateParametersDictForUser()));
 
 				CustomerInfo customer = new CustomerInfo();

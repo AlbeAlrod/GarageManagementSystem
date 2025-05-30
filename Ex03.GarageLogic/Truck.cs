@@ -7,7 +7,7 @@ namespace Ex03.GarageLogic
     public class Truck : Vehicle
     {
         private const int k_NumberOfWheels = 12;
-        private const float k_MaxAirPressure = 27f;
+        private const float k_MaxAirPressure = 100f;
         private const float k_FuelTankCapacity = 135f;
         private const FuelType k_FuelType = FuelType.Solar;
 
